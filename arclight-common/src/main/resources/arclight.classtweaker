@@ -612,6 +612,8 @@ transitive-accessible field net/minecraft/core/component/DataComponentPatch$Buil
 transitive-accessible class net/minecraft/world/phys/shapes/IndexMerger
 transitive-accessible class net/minecraft/server/network/ServerLoginPacketListenerImpl$State
 transitive-accessible method net/minecraft/world/level/block/Block dropFromBlockInteractLootTable (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/item/ItemInstance;Lnet/minecraft/world/entity/Entity;Ljava/util/function/BiConsumer;)Z
+transitive-accessible method net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess <init> (Lnet/minecraft/world/level/storage/LevelStorageSource;Ljava/lang/String;Ljava/nio/file/Path;)V
+transitive-accessible field net/minecraft/world/level/gamerules/GameRules rules Lnet/minecraft/world/level/gamerules/GameRuleMap;
 
 # Loom interface Injections
 transitive-inject-interface net/minecraft/advancements/AdvancementHolder io/izzel/arclight/common/bridge/core/advancements/AdvancementHolderBridge
@@ -706,7 +708,6 @@ transitive-inject-interface net/minecraft/world/level/portal/TeleportTransition 
 transitive-inject-interface net/minecraft/world/level/portal/PortalShape io/izzel/arclight/common/bridge/core/world/level/portal/PortalShapeBridge
 transitive-inject-interface net/minecraft/world/level/portal/PortalForcer io/izzel/arclight/common/bridge/core/world/level/portal/PortalForcerBridge
 transitive-inject-interface net/minecraft/world/level/saveddata/maps/MapItemSavedData io/izzel/arclight/common/bridge/core/world/level/saveddata/maps/MapItemSavedDataBridge
-transitive-inject-interface net/minecraft/world/level/storage/loot/LootContext io/izzel/arclight/common/bridge/core/world/level/storage/loot/LootContextBridge
 transitive-inject-interface net/minecraft/world/level/storage/loot/LootTable io/izzel/arclight/common/bridge/core/world/level/storage/loot/LootTableBridge
 transitive-inject-interface net/minecraft/world/level/storage/DerivedLevelData io/izzel/arclight/common/bridge/core/world/level/storage/DerivedLevelDataBridge
 transitive-inject-interface net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess io/izzel/arclight/common/bridge/core/world/level/storage/LevelStorageSourceBridge$LevelStorageAccessBridge
@@ -717,7 +718,7 @@ transitive-inject-interface net/minecraft/world/level/BlockGetter io/izzel/arcli
 transitive-inject-interface net/minecraft/world/level/LevelAccessor io/izzel/arclight/common/bridge/core/world/level/LevelAccessorBridge
 transitive-inject-interface net/minecraft/world/level/Explosion io/izzel/arclight/common/bridge/core/world/level/ExplosionBridge
 transitive-inject-interface net/minecraft/world/level/LevelWriter io/izzel/arclight/common/bridge/core/world/level/LevelWriterBridge
-transitive-inject-interface net/minecraft/world/level/gamerules/GameRules io/izzel/arclight/common/bridge/core/world/level/GameRulesBridge
+transitive-inject-interface net/minecraft/world/level/gamerules/GameRules io/izzel/arclight/common/bridge/core/world/level/gamerules/GameRulesBridge
 transitive-inject-interface net/minecraft/world/level/Level io/izzel/arclight/common/bridge/core/world/level/LevelBridge
 transitive-inject-interface net/minecraft/server/level/ChunkMap$TrackedEntity io/izzel/arclight/common/bridge/core/server/level/ChunkMap_TrackedEntityBridge
 transitive-inject-interface net/minecraft/server/level/DistanceManager io/izzel/arclight/common/bridge/core/server/level/DistanceManagerBridge
@@ -740,6 +741,8 @@ transitive-inject-interface net/minecraft/server/level/Ticket io/izzel/arclight/
 transitive-inject-interface net/minecraft/network/protocol/common/custom/DiscardedPayload io/izzel/arclight/common/bridge/core/network/protocol/common/custom/DiscardedPayloadBridge
 transitive-inject-interface net/minecraft/world/level/ServerLevelAccessor io/izzel/arclight/common/bridge/core/world/level/ServerLevelAccessorBridge
 transitive-inject-interface net/minecraft/server/network/ServerConnectionListener io/izzel/arclight/common/bridge/core/server/network/ServerConnectionListenerBridge
+transitive-inject-interface net/minecraft/world/level/storage/loot/LootDataType io/izzel/arclight/common/bridge/core/world/level/storage/loot/LootDataTypeBridge
+transitive-inject-interface net/minecraft/world/level/saveddata/WeatherData io/izzel/arclight/common/bridge/core/world/level/saveddata/WeatherDataBridge
 
 # enum extensions
 # transitive-extend-enum net/minecraft/world/level/Level$ExplosionInteraction STANDARD

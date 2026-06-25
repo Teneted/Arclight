@@ -266,8 +266,8 @@
     "net/minecraft/world/level/saveddata/maps/MapItemSavedData": [
       "io/izzel/arclight/common/bridge/core/world/level/saveddata/maps/MapItemSavedDataBridge"
     ],
-    "net/minecraft/world/level/storage/loot/LootContext": [
-      "io/izzel/arclight/common/bridge/core/world/level/storage/loot/LootContextBridge"
+    "net/minecraft/world/level/storage/loot/LootDataType": [
+      "io/izzel/arclight/common/bridge/core/world/level/storage/loot/LootDataTypeBridge"
     ],
     "net/minecraft/world/level/storage/loot/LootTable": [
       "io/izzel/arclight/common/bridge/core/world/level/storage/loot/LootTableBridge"
@@ -300,7 +300,7 @@
       "io/izzel/arclight/common/bridge/core/world/level/LevelWriterBridge"
     ],
     "net/minecraft/world/level/gamerules/GameRules": [
-      "io/izzel/arclight/common/bridge/core/world/level/GameRulesBridge"
+      "io/izzel/arclight/common/bridge/core/world/level/gamerules/GameRulesBridge"
     ],
     "net/minecraft/world/level/Level": [
       "io/izzel/arclight/common/bridge/core/world/level/LevelBridge"
@@ -364,6 +364,9 @@
     ],
     "net/minecraft/server/network/ServerConnectionListener": [
       "io/izzel/arclight/common/bridge/core/server/network/ServerConnectionListenerBridge"
+    ],
+    "et/minecraft/world/level/saveddata/WeatherData": [
+      "io/izzel/arclight/common/bridge/core/world/level/saveddata/WeatherDataBridge"
     ]
   }
 }

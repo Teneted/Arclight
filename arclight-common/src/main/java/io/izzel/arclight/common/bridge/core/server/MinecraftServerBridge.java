@@ -5,6 +5,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.server.WorldLoader;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.TimeSource;
+import net.minecraft.world.level.gamerules.GameRule;
 import net.minecraft.world.level.levelgen.WorldOptions;
 import net.minecraft.world.level.storage.LevelData;
 import net.minecraft.world.level.storage.ServerLevelData;
@@ -14,6 +15,9 @@ import org.bukkit.command.RemoteConsoleCommandSender;
 import org.bukkit.craftbukkit.CraftServer;
 
 public interface MinecraftServerBridge {
+
+    default <T> void onGameRuleChanged(final GameRule<T> rule, final T value, ServerLevel serverLevel) {
+    }
 
     default void bridge$setConsole(ConsoleCommandSender console) {
 

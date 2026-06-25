@@ -54,7 +54,7 @@ public abstract class PrimaryLevelDataMixin implements PrimaryLevelDataBridge {
     }
     // CraftBukkit end
 
-    @Inject(method = "setTagData", at = @At("TAIL"))
+    @Inject(method = "setTagData", at = @At("RETURN"))
     private void arclight$putBukkitValues(CompoundTag tag, UUID singlePlayerUUID, CallbackInfo ci) {
         tag.putString("Bukkit.Version", Bukkit.getName() + "/" + Bukkit.getVersion() + "/" + Bukkit.getBukkitVersion()); // CraftBukkit
         world.getWorld().storeBukkitValues(tag); // CraftBukkit - add pdc
@@ -62,10 +62,12 @@ public abstract class PrimaryLevelDataMixin implements PrimaryLevelDataBridge {
 
     @Inject(method = "setDifficulty", at = @At("RETURN"))
     private void arclight$sendDiffChange(Difficulty difficulty, CallbackInfo ci) {
+        // CraftBukkit start
         ClientboundChangeDifficultyPacket packet = new ClientboundChangeDifficultyPacket(this.getDifficulty(), this.isDifficultyLocked());
-        for (Player player : this.world.players()) {
-            ((ServerPlayer) player).connection.send(packet);
+        for (ServerPlayer player : world.players()) {
+            player.connection.send(packet);
         }
+        // CraftBukkit end
     }
 
     // CraftBukkit start - Check if the name stored in NBT is the correct one
@@ -95,5 +97,15 @@ public abstract class PrimaryLevelDataMixin implements PrimaryLevelDataBridge {
     @Override
     public Lifecycle bridge$getLifecycle() {
         return this.worldGenSettingsLifecycle;
+    }
+
+    @Override
+    public Tag bridge$getPdc() {
+        return this.pdc;
+    }
+
+    @Override
+    public void bridge$setPdc(Tag pdc) {
+        this.pdc = pdc;
     }
 }

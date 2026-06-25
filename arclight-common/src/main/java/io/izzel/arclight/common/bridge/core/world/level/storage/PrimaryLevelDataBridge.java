@@ -2,6 +2,7 @@ package io.izzel.arclight.common.bridge.core.world.level.storage;
 
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.core.Registry;
+import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.LevelSettings;
 import net.minecraft.world.level.dimension.LevelStem;
@@ -30,5 +31,12 @@ public interface PrimaryLevelDataBridge {
 
     default void arclight$offerCustomDimensions(Registry<LevelStem> registry) {
 
+    }
+
+    default Tag bridge$getPdc() {
+        return null;
+    }
+
+    default void bridge$setPdc(Tag pdc) {
     }
 }

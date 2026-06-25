@@ -34,6 +34,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.NbtException;
 import net.minecraft.nbt.ReportedNbtException;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
+import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
 import net.minecraft.network.protocol.game.ClientboundSetDefaultSpawnPositionPacket;
 import net.minecraft.network.protocol.game.ClientboundSetTimePacket;
 import net.minecraft.network.protocol.status.ServerStatus;
@@ -49,11 +51,13 @@ import net.minecraft.server.dedicated.DedicatedServer;
 import net.minecraft.server.dedicated.DedicatedServerProperties;
 import net.minecraft.server.level.ChunkLoadCounter;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.level.progress.LevelLoadListener;
 import net.minecraft.server.network.ServerConnectionListener;
 import net.minecraft.server.notifications.NotificationManager;
 import net.minecraft.server.packs.repository.PackRepository;
 import net.minecraft.server.players.PlayerList;
+import net.minecraft.server.waypoints.ServerWaypointManager;
 import net.minecraft.util.ModCheck;
 import net.minecraft.util.TimeSource;
 import net.minecraft.util.TimeUtil;
@@ -81,6 +85,7 @@ import net.minecraft.world.level.biome.BiomeManager;
 import net.minecraft.world.level.border.WorldBorder;
 import net.minecraft.world.level.dimension.DimensionType;
 import net.minecraft.world.level.dimension.LevelStem;
+import net.minecraft.world.level.gamerules.GameRule;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.PatrolSpawner;
 import net.minecraft.world.level.levelgen.PhantomSpawner;
@@ -136,6 +141,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Queue;
 import java.util.Set;
@@ -164,6 +170,9 @@ public abstract class MinecraftServerMixin extends ReentrantBlockableEventLoop<T
     @Shadow public ServerConnectionListener connection;
     @Shadow public abstract RegistryAccess.Frozen registryAccess();
     // @formatter:on
+
+    @Shadow
+    public abstract void updateMobSpawningFlags();
 
     // CraftBukkit start
     public WorldLoader.DataLoadContext worldLoader;
@@ -660,6 +669,42 @@ public abstract class MinecraftServerMixin extends ReentrantBlockableEventLoop<T
             this.getPlayerList().broadcastAll(new ClientboundSetDefaultSpawnPositionPacket(respawnData));
             this.updateEffectiveRespawnData();
         }
+    }
+
+    @Override
+    public <T> void onGameRuleChanged(final GameRule<T> rule, final T value, ServerLevel serverLevel) {
+        serverLevel.getServer().notificationManager().onGameRuleChanged(rule, value);
+        if (rule == GameRules.REDUCED_DEBUG_INFO) {
+            byte event = (byte)((Boolean)value ? 22 : 23);
+
+            for(ServerPlayer player :  serverLevel.players()) { // CraftBukkit - per-world
+                player.connection.send(new ClientboundEntityEventPacket(player, event));
+            }
+        } else if (rule != GameRules.LIMITED_CRAFTING && rule != GameRules.IMMEDIATE_RESPAWN) {
+            if (rule == GameRules.LOCATOR_BAR) {
+                // CraftBukkit start - per-world
+                // this.getAllLevels().forEach((serverlevel) -> {
+                    ServerWaypointManager waypointManager = serverLevel.getWaypointManager();
+                    if ((Boolean)value) {
+                        List<ServerPlayer> list = serverLevel.players(); // CraftBukkit - decompile error
+                        Objects.requireNonNull(waypointManager);
+                        list.forEach(waypointManager::updatePlayer);
+                    } else {
+                        waypointManager.breakAllConnections();
+                    }
+                // });
+                // CraftBukkit end
+            } else if (rule == GameRules.SPAWN_MONSTERS) {
+                serverLevel.setSpawnSettings(serverLevel.isSpawningMonsters()); // CraftBukkit - per-world
+            } else if (rule == GameRules.ADVANCE_TIME) {
+                serverLevel.players().forEach((player) -> player.connection.send(serverLevel.clockManager().createFullSyncPacket(player))); // CraftBukkit - per-player
+            }
+        } else {
+            ClientboundGameEventPacket.Type eventType = rule == GameRules.LIMITED_CRAFTING ? ClientboundGameEventPacket.LIMITED_CRAFTING : ClientboundGameEventPacket.IMMEDIATE_RESPAWN;
+            ClientboundGameEventPacket packet = new ClientboundGameEventPacket(eventType, (Boolean)value ? 1.0F : 0.0F);
+            serverLevel.players().forEach((playerx) -> playerx.connection.send(packet));
+        }
+
     }
 
     @Override

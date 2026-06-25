@@ -12,6 +12,10 @@ public interface MapItemSavedDataBridge {
         return null;
     }
 
+    default MapId bridge$getId() {
+        return null;
+    }
+
     default void bridge$setId(MapId id) {
 
     }

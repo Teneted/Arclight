@@ -7,7 +7,7 @@ import org.bukkit.inventory.InventoryView;
 
 public interface AbstractContainerMenuBridge {
 
-    default InventoryView bridge$getBukkitView() {
+    default InventoryView getBukkitView() {
         return null;
     }
 

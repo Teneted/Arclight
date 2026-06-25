@@ -614,6 +614,7 @@ transitive-accessible class net/minecraft/server/network/ServerLoginPacketListen
 transitive-accessible method net/minecraft/world/level/block/Block dropFromBlockInteractLootTable (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/resources/ResourceKey;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/world/level/block/entity/BlockEntity;Lnet/minecraft/world/item/ItemInstance;Lnet/minecraft/world/entity/Entity;Ljava/util/function/BiConsumer;)Z
 transitive-accessible method net/minecraft/world/level/storage/LevelStorageSource$LevelStorageAccess <init> (Lnet/minecraft/world/level/storage/LevelStorageSource;Ljava/lang/String;Ljava/nio/file/Path;)V
 transitive-accessible field net/minecraft/world/level/gamerules/GameRules rules Lnet/minecraft/world/level/gamerules/GameRuleMap;
+transitive-accessible class net/minecraft/world/inventory/MenuType$MenuSupplier
 
 # Loom interface Injections
 transitive-inject-interface net/minecraft/advancements/AdvancementHolder io/izzel/arclight/common/bridge/core/advancements/AdvancementHolderBridge

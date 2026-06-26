@@ -19,6 +19,7 @@ import org.bukkit.event.entity.EntityPotionEffectEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 public interface LivingEntityBridge extends EntityBridge {
@@ -106,5 +107,9 @@ public interface LivingEntityBridge extends EntityBridge {
     @Nullable
     default EntityDamageEvent arclight$fireEntityDamageEvent(DamageSource source, float original) {
         return null;
+    }
+
+    default ArrayList<org.bukkit.inventory.ItemStack> bridge$getDrops() {
+        return new ArrayList<>();
     }
 }

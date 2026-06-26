@@ -48,7 +48,7 @@ public interface ServerPlayerBridge extends PlayerBridge {
         return null;
     }
 
-    default void bridge$resendItemInHands() {
+    default void resendItemInHands() {
 
     }
 

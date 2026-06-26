@@ -1,84 +1,133 @@
 package io.izzel.arclight.common.mixin.core.world.entity;
 
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.serialization.Codec;
 import io.izzel.arclight.common.bridge.core.world.entity.EntityBridge;
 import io.izzel.arclight.common.bridge.core.world.entity.InternalEntityBridge;
 import io.izzel.arclight.common.bridge.optimization.EntityBridge_ActivationRange;
+import net.minecraft.CrashReport;
+import net.minecraft.CrashReportCategory;
+import net.minecraft.ReportedException;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
+import net.minecraft.network.protocol.game.ClientboundSetEntityLinkPacket;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Leashable;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec2;
+import net.minecraft.world.phys.Vec3;
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
+import org.bukkit.entity.Vehicle;
 import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityDropItemEvent;
 import org.bukkit.event.entity.EntityPoseChangeEvent;
 import org.bukkit.event.entity.EntityRemoveEvent;
+import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
+import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Mixin(Entity.class)
 public abstract class EntityMixin implements EntityBridge, EntityBridge_ActivationRange, InternalEntityBridge {
 
-    @Shadow
-    private Level level;
-    @Shadow
-    @Final
-    public static int TOTAL_AIR_SUPPLY;
-    @Shadow
-    private float yRot;
+    // @formatter:off
+    @Shadow private Level level;
+    @Shadow @Final public static int TOTAL_AIR_SUPPLY;
+    @Shadow private float yRot;
+    @Shadow public abstract double getX();
+    @Shadow public abstract double getZ();
+    @Shadow public abstract void remove(Entity.RemovalReason reason);
+    @Shadow public abstract int getId();
+    @Shadow public abstract SynchedEntityData getEntityData();
+    @Shadow public abstract void setRemoved(Entity.RemovalReason reason);
+    @Shadow public abstract Pose getPose();
+    @Shadow public abstract String getScoreboardName();
+    @Shadow protected abstract void handlePortal();
+    @Shadow public abstract boolean isInLava();
+    @Shadow public abstract void igniteForTicks(int numberOfTicks);
+    @Shadow private int remainingFireTicks;
+    @Shadow public boolean horizontalCollision;
+    @Shadow public abstract double getY();
+    @Shadow protected abstract SoundEvent getSwimHighSpeedSplashSound();
+    @Shadow protected abstract SoundEvent getSwimSplashSound();
+    @Shadow protected abstract SoundEvent getSwimSound();
+    @Shadow public abstract boolean isPushable();
+    @Shadow protected abstract void addAdditionalSaveData(ValueOutput output);
+    @Shadow public abstract void fillCrashReportCategory(CrashReportCategory category);
+    @Shadow public abstract List<Entity> getPassengers();
+    @Shadow public abstract boolean isVehicle();
+    @Shadow private CustomData customData;
+    @Shadow @Final private Set<String> tags;
+    @Shadow @Final private static Codec<List<String>> TAG_LIST_CODEC;
+    @Shadow public boolean hasVisualFire;
+    @Shadow public abstract int getTicksFrozen();
+    @Shadow private boolean hasGlowingTag;
+    @Shadow public abstract boolean isNoGravity();
+    @Shadow public abstract boolean isSilent();
+    @Shadow public abstract boolean isCustomNameVisible();
+    @Shadow public abstract UUID getUUID();
+    @Shadow public abstract @Nullable Component getCustomName();
+    @Shadow public int portalCooldown;
+    @Shadow private boolean invulnerable;
+    @Shadow public abstract boolean onGround();
+    @Shadow public abstract int getAirSupply();
+    @Shadow public double fallDistance;
+    @Shadow public abstract float getXRot();
+    @Shadow public abstract float getYRot();
+    @Shadow public abstract Vec3 getDeltaMovement();
+    @Shadow public abstract Vec3 position();
+    @Shadow private @Nullable Entity vehicle;
+    @Shadow private float xRot;
+    @Shadow public abstract int getMaxAirSupply();
+    @Shadow private Entity.@Nullable RemovalReason removalReason;
+    @Shadow public abstract @Nullable String getEncodeId();
+    @Shadow public abstract void setInvisible(boolean invisible);
+    // @formatter:on
 
-    @Shadow
-    public abstract double getX();
-
-    @Shadow
-    public abstract double getZ();
-
-    @Shadow
-    public abstract void remove(Entity.RemovalReason reason);
-
-    @Shadow
-    public abstract int getId();
-
-    @Shadow
-    public abstract SynchedEntityData getEntityData();
-
-    @Shadow
-    public abstract void setRemoved(Entity.RemovalReason reason);
-
-    @Shadow
-    public abstract Pose getPose();
-
-    @Shadow
-    public abstract String getScoreboardName();
-
-    @Shadow
-    protected abstract void handlePortal();
-
-    @Shadow
-    public abstract boolean isInLava();
-
-    @Shadow
-    public abstract void igniteForTicks(int numberOfTicks);
-
-    @Shadow
-    private int remainingFireTicks;
     // CraftBukkit start
     private static final int CURRENT_LEVEL = 2;
     private static boolean isLevelAtLeast(ValueInput tag, int level) {
@@ -232,6 +281,344 @@ public abstract class EntityMixin implements EntityBridge, EntityBridge_Activati
 
         numberOfSeconds = event.getDuration();
     }
+
+    @Inject(method = "onBelowWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;discard()V"))
+    private void arclight$discardOnBelowWorld(CallbackInfo ci) {
+        this.bridge$pushEntityRemoveCause(EntityRemoveEvent.Cause.OUT_OF_WORLD); // CraftBukkit - add Bukkit remove cause
+    }
+
+    @ModifyArg(method = "lavaHurt", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z"), index = 1)
+    private DamageSource arclight$putLastLavaContactDmgSrc(DamageSource source) {
+        return source.directBlock(level, lastLavaContact);
+    }
+
+    @Inject(method = "move", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;isClientSide()Z"))
+    private void arclight$callVehicleBlockCollisionEvent(MoverType moverType, Vec3 delta, CallbackInfo ci, @Local(ordinal = 1) Vec3 movement) {
+        // CraftBukkit start
+        if (horizontalCollision && getBukkitEntity() instanceof Vehicle) {
+            Vehicle vehicle = (Vehicle) this.getBukkitEntity();
+            org.bukkit.block.Block bl = this.level.getWorld().getBlockAt(Mth.floor(this.getX()), Mth.floor(this.getY()), Mth.floor(this.getZ()));
+
+            if (delta.x > movement.x) {
+                bl = bl.getRelative(BlockFace.EAST);
+            } else if (delta.x < movement.x) {
+                bl = bl.getRelative(BlockFace.WEST);
+            } else if (delta.z > movement.z) {
+                bl = bl.getRelative(BlockFace.SOUTH);
+            } else if (delta.z < movement.z) {
+                bl = bl.getRelative(BlockFace.NORTH);
+            }
+
+            if (!bl.getType().isAir()) {
+                VehicleBlockCollisionEvent event = new VehicleBlockCollisionEvent(vehicle, bl);
+                level.getCraftServer().getPluginManager().callEvent(event);
+            }
+        }
+        // CraftBukkit end
+    }
+
+    @Inject(method = "absSnapTo(DDD)V", at = @At("RETURN"))
+    private void arclight$checkValid(double x, double y, double z, CallbackInfo ci) {
+        if (valid) level.getChunk((int) Math.floor(this.getX()) >> 4, (int) Math.floor(this.getZ()) >> 4); // CraftBukkit
+    }
+
+    @Definition(id = "id", local = @Local(type = String.class, name = "id"))
+    @Expression("id == null")
+    @ModifyExpressionValue(method = "saveAsPassenger", at = @At("MIXINEXTRAS:EXPRESSION"))
+    private boolean arclight$persistFlag(boolean original) {
+        return !this.persist || original;
+    }
+
+    @Inject(method = "saveWithoutId", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/ValueOutput;store(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)V", ordinal = 1))
+    private void arclight$checkNaN(ValueOutput output, CallbackInfo ci) {
+        // CraftBukkit start - Checking for NaN pitch/yaw and resetting to zero
+        // TODO: make sure this is the best way to address this.
+        if (Float.isNaN(this.yRot)) {
+            this.yRot = 0;
+        }
+
+        if (Float.isNaN(this.xRot)) {
+            this.xRot = 0;
+        }
+        // CraftBukkit end
+    }
+
+    @Inject(method = "saveWithoutId", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/storage/ValueOutput;storeNullable(Ljava/lang/String;Lcom/mojang/serialization/Codec;Ljava/lang/Object;)V"))
+    private void arclight$selectivelySave(ValueOutput output, CallbackInfo ci) {
+        // PAIL: Check above UUID reads 1.8 properly, ie: UUIDMost / UUIDLeast
+        output.putLong("WorldUUIDLeast", ((ServerLevel) this.level).getWorld().getUID().getLeastSignificantBits());
+        output.putLong("WorldUUIDMost", ((ServerLevel) this.level).getWorld().getUID().getMostSignificantBits());
+        output.putInt("Bukkit.updateLevel", CURRENT_LEVEL);
+        if (!this.persist) {
+            output.putBoolean("Bukkit.persist", this.persist);
+        }
+        if (!this.visibleByDefault) {
+            output.putBoolean("Bukkit.visibleByDefault", this.visibleByDefault);
+        }
+        if (this.persistentInvisibility) {
+            output.putBoolean("Bukkit.invisible", this.persistentInvisibility);
+        }
+        // SPIGOT-6907: re-implement LivingEntity#setMaximumAir()
+        if (maxAirTicks != getDefaultMaxAirSupply()) {
+            output.putInt("Bukkit.MaxAirSupply", getMaxAirSupply());
+        }
+        // CraftBukkit end
+    }
+
+    @Inject(method = "saveWithoutId", at = @At("RETURN"))
+    private void arclight$storeBukkitValues(ValueOutput output, CallbackInfo ci) {
+        // CraftBukkit start - stores eventually existing bukkit values
+        if (this.bukkitEntity != null) {
+            this.bukkitEntity.storeBukkitValues(output);
+        }
+        // CraftBukkit end
+    }
+
+    @Inject(method = "load", at = @At("RETURN"))
+    private void arclight$loadInfo(ValueInput input, CallbackInfo ci) {
+        // CraftBukkit start
+        this.persist = input.getBooleanOr("Bukkit.persist", this.persist);
+        this.visibleByDefault = input.getBooleanOr("Bukkit.visibleByDefault", this.visibleByDefault);
+        // SPIGOT-6907: re-implement LivingEntity#setMaximumAir()
+        this.maxAirTicks = input.getIntOr("Bukkit.MaxAirSupply", this.maxAirTicks);
+        // CraftBukkit end
+
+        // CraftBukkit start - Reset world
+        if (((Entity) (Object) this) instanceof ServerPlayer) {
+            Server server = Bukkit.getServer();
+            org.bukkit.World bworld = null;
+
+            // TODO: Remove World related checks, replaced with WorldUID
+            String worldName = input.getStringOr("world", "");
+
+            Optional<Long> most = input.getLong("WorldUUIDMost");
+            Optional<Long> least = input.getLong("WorldUUIDLeast");
+            if (most.isPresent() && least.isPresent()) {
+                UUID uid = new UUID(most.get(), least.get());
+                bworld = server.getWorld(uid);
+            } else {
+                bworld = server.getWorld(worldName);
+            }
+
+            if (bworld == null) {
+                bworld = ((org.bukkit.craftbukkit.CraftServer) server).getServer().getLevel(Level.OVERWORLD).getWorld();
+            }
+
+            ((ServerPlayer) (Object) this).setLevel(bworld == null ? null : ((CraftWorld) bworld).getHandle());
+        }
+        this.getBukkitEntity().readBukkitValues(input);
+        boolean bukkitInvisible = input.getBooleanOr("Bukkit.invisible", false);
+        if (bukkitInvisible) {
+            this.setInvisible(bukkitInvisible);
+            this.persistentInvisibility = bukkitInvisible;
+        }
+        // CraftBukkit end
+
+    }
+
+    @Inject(method = "spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/item/ItemEntity;<init>(Lnet/minecraft/world/level/Level;DDDLnet/minecraft/world/item/ItemStack;)V"), cancellable = true)
+    private void arclight$captureDrops(ServerLevel level, ItemStack itemStack, Vec3 offset, CallbackInfoReturnable<ItemEntity> cir) {
+        // CraftBukkit start - Capture drops for death event
+        if (((Entity) (Object) this) instanceof LivingEntity && !((LivingEntity) (Object) this).bridge$isForceDrops()) {
+            ((LivingEntity) (Object) this).bridge$getDrops().add(org.bukkit.craftbukkit.inventory.CraftItemStack.asBukkitCopy(itemStack));
+            cir.setReturnValue(null);
+        }
+        // CraftBukkit end
+    }
+
+    @Inject(method = "spawnAtLocation(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/item/ItemStack;Lnet/minecraft/world/phys/Vec3;)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;addFreshEntity(Lnet/minecraft/world/entity/Entity;)Z"), cancellable = true)
+    private void arclight$callEntityDropItemEvent(ServerLevel level, ItemStack itemStack, Vec3 offset, CallbackInfoReturnable<ItemEntity> cir, @Local ItemEntity entity) {
+        // CraftBukkit start
+        EntityDropItemEvent event = new EntityDropItemEvent(this.getBukkitEntity(), (org.bukkit.entity.Item) entity.getBukkitEntity());
+        Bukkit.getPluginManager().callEvent(event);
+        if (event.isCancelled()) {
+            cir.setReturnValue(null);
+        }
+        // CraftBukkit end
+    }
+
+    @Inject(method = "interact", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;hasInfiniteMaterials()Z"), cancellable = true)
+    private void arclight$callPlayerUnleashEntityEvent(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir, @Local Leashable leashable) {
+        // CraftBukkit start - fire PlayerUnleashEntityEvent
+        if (CraftEventFactory.callPlayerUnleashEntityEvent(((Entity) (Object) this), player, hand).isCancelled()) {
+            ((ServerPlayer) player).connection.send(new ClientboundSetEntityLinkPacket(((Entity) (Object) this), leashable.getLeashHolder()));
+            cir.setReturnValue(InteractionResult.PASS);
+        }
+        // CraftBukkit end
+    }
+
+    @Inject(method = "interact", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Leashable;isLeashed()Z"), cancellable = true)
+    private void arclight$callPlayerLeashEntityEvent(Player player, InteractionHand hand, Vec3 location, CallbackInfoReturnable<InteractionResult> cir, @Local Leashable leashable) {
+        // CraftBukkit start - fire PlayerLeashEntityEvent
+        if (CraftEventFactory.callPlayerLeashEntityEvent(((Entity) (Object) this), player, player, hand).isCancelled()) {
+            ((ServerPlayer) player).resendItemInHands(); // SPIGOT-7615: Resend to fix client desync with used item
+            ((ServerPlayer) player).connection.send(new ClientboundSetEntityLinkPacket(((Entity) (Object) this), leashable.getLeashHolder()));
+            cir.setReturnValue(InteractionResult.PASS);
+        }
+        // CraftBukkit end
+    }
+
+    @Override
+    public boolean saveAsPassenger(ValueOutput output, boolean includeAll) {
+        if (this.removalReason != null && !this.removalReason.shouldSave()) {
+            return false;
+        } else {
+            String id = this.getEncodeId();
+            if (!this.persist || id == null) { // CraftBukkit - persist flag
+                return false;
+            } else {
+                output.putString("id", id);
+                this.saveWithoutId(output, includeAll); // CraftBukkit - pass on includeAll
+                return true;
+            }
+        }
+    }
+
+    @Override
+    public void saveWithoutId(ValueOutput output, boolean includeAll) {
+        try {
+            // CraftBukkit start - selectively save position
+            if (includeAll) {
+                if (this.vehicle != null) {
+                    output.store("Pos", Vec3.CODEC, new Vec3(this.vehicle.getX(), this.getY(), this.vehicle.getZ()));
+                } else {
+                    output.store("Pos", Vec3.CODEC, this.position());
+                }
+            }
+            // CraftBukkit end
+
+            output.store("Motion", Vec3.CODEC, this.getDeltaMovement());
+            // CraftBukkit start - Checking for NaN pitch/yaw and resetting to zero
+            // TODO: make sure this is the best way to address this.
+            if (Float.isNaN(this.yRot)) {
+                this.yRot = 0;
+            }
+
+            if (Float.isNaN(this.xRot)) {
+                this.xRot = 0;
+            }
+            // CraftBukkit end
+            output.store("Rotation", Vec2.CODEC, new Vec2(this.getYRot(), this.getXRot()));
+            output.putDouble("fall_distance", this.fallDistance);
+            output.putShort("Fire", (short)this.remainingFireTicks);
+            output.putShort("Air", (short)this.getAirSupply());
+            output.putBoolean("OnGround", this.onGround());
+            output.putBoolean("Invulnerable", this.invulnerable);
+            output.putInt("PortalCooldown", this.portalCooldown);
+            // CraftBukkit start - selectively save uuid and world
+            if (includeAll) {
+                output.store("UUID", UUIDUtil.CODEC, this.getUUID());
+                // PAIL: Check above UUID reads 1.8 properly, ie: UUIDMost / UUIDLeast
+                output.putLong("WorldUUIDLeast", ((ServerLevel) this.level).getWorld().getUID().getLeastSignificantBits());
+                output.putLong("WorldUUIDMost", ((ServerLevel) this.level).getWorld().getUID().getMostSignificantBits());
+            }
+            output.putInt("Bukkit.updateLevel", CURRENT_LEVEL);
+            if (!this.persist) {
+                output.putBoolean("Bukkit.persist", this.persist);
+            }
+            if (!this.visibleByDefault) {
+                output.putBoolean("Bukkit.visibleByDefault", this.visibleByDefault);
+            }
+            if (this.persistentInvisibility) {
+                output.putBoolean("Bukkit.invisible", this.persistentInvisibility);
+            }
+            // SPIGOT-6907: re-implement LivingEntity#setMaximumAir()
+            if (maxAirTicks != getDefaultMaxAirSupply()) {
+                output.putInt("Bukkit.MaxAirSupply", getMaxAirSupply());
+            }
+            // CraftBukkit end
+            output.storeNullable("CustomName", ComponentSerialization.CODEC, this.getCustomName());
+            if (this.isCustomNameVisible()) {
+                output.putBoolean("CustomNameVisible", this.isCustomNameVisible());
+            }
+
+            if (this.isSilent()) {
+                output.putBoolean("Silent", this.isSilent());
+            }
+
+            if (this.isNoGravity()) {
+                output.putBoolean("NoGravity", this.isNoGravity());
+            }
+
+            if (this.hasGlowingTag) {
+                output.putBoolean("Glowing", true);
+            }
+
+            int ticksFrozen = this.getTicksFrozen();
+            if (ticksFrozen > 0) {
+                output.putInt("TicksFrozen", this.getTicksFrozen());
+            }
+
+            if (this.hasVisualFire) {
+                output.putBoolean("HasVisualFire", this.hasVisualFire);
+            }
+
+            if (!this.tags.isEmpty()) {
+                output.store("Tags", TAG_LIST_CODEC, List.copyOf(this.tags));
+            }
+
+            if (!this.customData.isEmpty()) {
+                output.store("data", CustomData.CODEC, this.customData);
+            }
+
+            this.addAdditionalSaveData(output, includeAll); // CraftBukkit - pass on includeAll
+            if (this.isVehicle()) {
+                ValueOutput.ValueOutputList passengersList = output.childrenList("Passengers");
+
+                for(Entity passenger : this.getPassengers()) {
+                    ValueOutput passengerOutput = passengersList.addChild();
+                    if (!passenger.saveAsPassenger(passengerOutput, includeAll)) { // CraftBukkit - pass on includeAll
+                        passengersList.discardLast();
+                    }
+                }
+
+                if (passengersList.isEmpty()) {
+                    output.discard("Passengers");
+                }
+            }
+
+            // CraftBukkit start - stores eventually existing bukkit values
+            if (this.bukkitEntity != null) {
+                this.bukkitEntity.storeBukkitValues(output);
+            }
+            // CraftBukkit end
+        } catch (Throwable t) {
+            CrashReport report = CrashReport.forThrowable(t, "Saving entity NBT");
+            CrashReportCategory category = report.addCategory("Entity being saved");
+            this.fillCrashReportCategory(category);
+            throw new ReportedException(report);
+        }
+    }
+
+    // CraftBukkit start - collidable API
+    @Override
+    public boolean canCollideWithBukkit(Entity entity) {
+        return isPushable();
+    }
+    // CraftBukkit end
+
+    // CraftBukkit start - allow excluding certain data when saving
+    protected void addAdditionalSaveData(ValueOutput output, boolean includeAll) {
+        addAdditionalSaveData(output);
+    }
+    // CraftBukkit end
+
+    // CraftBukkit start - Add delegate methods
+    @Override
+    public SoundEvent getSwimSound0() {
+        return getSwimSound();
+    }
+
+    @Override
+    public SoundEvent getSwimSplashSound0() {
+        return getSwimSplashSound();
+    }
+
+    @Override
+    public SoundEvent getSwimHighSpeedSplashSound0() {
+        return getSwimHighSpeedSplashSound();
+    }
+    // CraftBukkit end
 
     @Override
     public final void igniteForSeconds(float numberOfSeconds, boolean callEvent) {

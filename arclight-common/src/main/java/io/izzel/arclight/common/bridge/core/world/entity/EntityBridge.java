@@ -6,11 +6,13 @@ import io.izzel.tools.product.Product;
 import io.izzel.tools.product.Product4;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.event.CraftPortalEvent;
@@ -226,6 +228,29 @@ public interface EntityBridge extends CommandSourceBridge {
     default void setRemoved(Entity.RemovalReason reason, EntityRemoveEvent.Cause cause) {}
 
     default void igniteForSeconds(float numberOfSeconds, boolean callEvent) {
+    }
+
+    default SoundEvent getSwimSound0() {
+        return null;
+    }
+
+    default SoundEvent getSwimSplashSound0() {
+        return null;
+    }
+
+    default SoundEvent getSwimHighSpeedSplashSound0() {
+        return null;
+    }
+
+    default boolean canCollideWithBukkit(Entity entity) {
+        return false;
+    }
+
+    default void saveWithoutId(ValueOutput output, boolean includeAll) {
+    }
+
+    default boolean saveAsPassenger(ValueOutput output, boolean includeAll) {
+        return false;
     }
 
     /**

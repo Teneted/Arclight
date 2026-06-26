@@ -5,6 +5,7 @@ import io.izzel.arclight.common.mod.server.entity.ArclightSpawnReason;
 import io.izzel.tools.product.Product;
 import io.izzel.tools.product.Product4;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
@@ -62,6 +63,13 @@ public interface EntityBridge extends CommandSourceBridge {
 
     }
 
+    default void bridge$setVisibleByDefault(boolean visible) {
+    }
+
+    default boolean bridge$isVisibleByDefault() {
+        return false;
+    }
+
     default boolean bridge$isInWorld() {
         return false;
     }
@@ -78,10 +86,6 @@ public interface EntityBridge extends CommandSourceBridge {
 
     }
 
-    default float bridge$getBukkitYaw() {
-        return 0;
-    }
-
     default boolean bridge$isChunkLoaded() {
         return false;
     }
@@ -91,10 +95,6 @@ public interface EntityBridge extends CommandSourceBridge {
     }
 
     default void bridge$setLastDamageCancelled(boolean cancelled) {
-
-    }
-
-    default void bridge$postTick() {
 
     }
 
@@ -181,6 +181,51 @@ public interface EntityBridge extends CommandSourceBridge {
 
     default ItemEntity arclight$spawnAtLocationNoAdd(ItemStack stack) {
         return arclight$spawnAtLocationNoAdd(stack, 0f);
+    }
+
+    default boolean bridge$isGeneration() {
+        return false;
+    }
+
+    default void bridge$setGeneration(boolean generation) {
+    }
+
+    default int bridge$getMaxAirTicks() {
+        return 0;
+    }
+
+    default void bridge$setMaxAirTicks(int maxAirTicks) {
+    }
+
+    default boolean bridge$isPersistentInvisibility() {
+        return false;
+    }
+
+    default void bridge$setPersistentInvisibility(boolean persistentInvisibility) {
+    }
+
+    default BlockPos bridge$getLastLavaContact() {
+        return null;
+    }
+
+    default boolean bridge$isPluginRemoved() {
+        return false;
+    }
+
+    default void bridge$setPluginRemoved(boolean pluginRemoved) {
+    }
+
+    default void discard(EntityRemoveEvent.Cause cause) {}
+
+    default void refreshEntityData(ServerPlayer to) {}
+
+    default void remove(Entity.RemovalReason entity_removalreason, EntityRemoveEvent.Cause cause) {}
+
+    default void postTick() {}
+
+    default void setRemoved(Entity.RemovalReason reason, EntityRemoveEvent.Cause cause) {}
+
+    default void igniteForSeconds(float numberOfSeconds, boolean callEvent) {
     }
 
     /**

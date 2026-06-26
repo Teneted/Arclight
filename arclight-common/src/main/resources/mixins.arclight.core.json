@@ -68,6 +68,8 @@
     "world.effect.HealOrHarmMobEffectMixin",
     "world.effect.OozingMobEffectMixin",
     "world.entity.EntityMixin",
+    "world.food.FoodDataMixin",
+    "world.food.FoodPropertiesMixin",
     "world.inventory.BeaconMenuMixin",
     "world.inventory.BrewingStandMenuMixin",
     "world.inventory.ContainerLevelAccess_2Mixin",

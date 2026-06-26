@@ -36,7 +36,7 @@ public interface FoodDataBridge {
     }
 
 
-    default void bridge$setEntityHuman(Player playerEntity) {
+    default void bridge$setEntityHuman(ServerPlayer playerEntity) {
 
     }
 

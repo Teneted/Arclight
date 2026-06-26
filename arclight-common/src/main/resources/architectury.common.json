@@ -7,8 +7,11 @@
     "net/minecraft/commands/Commands": [
       "io/izzel/arclight/common/bridge/core/commands/CommandsBridge"
     ],
+    "net/minecraft/commands/CommandSource": [
+      "io/izzel/arclight/common/bridge/core/commands/CommandSourceBridge"
+    ],
     "net/minecraft/commands/CommandSource$1": [
-      "io/izzel/arclight/common/bridge/core/command/CommandSourceBridge"
+      "io/izzel/arclight/common/bridge/core/commands/CommandSource_1Bridge"
     ],
     "net/minecraft/commands/CommandSourceStack": [
       "io/izzel/arclight/common/bridge/core/commands/CommandSourceStackBridge"

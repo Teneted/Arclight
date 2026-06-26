@@ -620,7 +620,8 @@ transitive-accessible method net/minecraft/world/entity/Entity setLevel (Lnet/mi
 # Loom interface Injections
 transitive-inject-interface net/minecraft/advancements/AdvancementHolder io/izzel/arclight/common/bridge/core/advancements/AdvancementHolderBridge
 transitive-inject-interface net/minecraft/commands/Commands io/izzel/arclight/common/bridge/core/commands/CommandsBridge
-transitive-inject-interface net/minecraft/commands/CommandSource$1 io/izzel/arclight/common/bridge/core/command/CommandSourceBridge
+transitive-inject-interface net/minecraft/commands/CommandSource io/izzel/arclight/common/bridge/core/commands/CommandSourceBridge
+transitive-inject-interface net/minecraft/commands/CommandSource$1 io/izzel/arclight/common/bridge/core/command/CommandSource_1Bridge
 transitive-inject-interface net/minecraft/commands/CommandSourceStack io/izzel/arclight/common/bridge/core/commands/CommandSourceStackBridge
 transitive-inject-interface net/minecraft/commands/arguments/EntityArgument io/izzel/arclight/common/bridge/core/commands/arguments/EntityArgumentBridge
 transitive-inject-interface net/minecraft/commands/arguments/selector/EntitySelectorParser io/izzel/arclight/common/bridge/core/commands/arguments/selector/EntitySelectorParserBridge

@@ -1,6 +1,6 @@
 package io.izzel.arclight.common.bridge.core.world.entity;
 
-import io.izzel.arclight.common.bridge.core.command.CommandSourceBridge;
+import io.izzel.arclight.common.bridge.core.commands.CommandSourceBridge;
 import io.izzel.arclight.common.mod.server.entity.ArclightSpawnReason;
 import io.izzel.tools.product.Product;
 import io.izzel.tools.product.Product4;

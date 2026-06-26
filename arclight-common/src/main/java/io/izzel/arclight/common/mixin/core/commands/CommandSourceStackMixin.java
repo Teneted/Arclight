@@ -11,7 +11,7 @@ import net.minecraft.server.permissions.PermissionSet;
 import net.minecraft.server.players.NameAndId;
 import com.mojang.brigadier.tree.CommandNode;
 import io.izzel.arclight.common.bridge.core.commands.CommandSourceStackBridge;
-import io.izzel.arclight.common.bridge.core.command.CommandSourceBridge;
+import io.izzel.arclight.common.bridge.core.commands.CommandSourceBridge;
 import io.izzel.arclight.common.mod.compat.CommandNodeHooks;
 import io.izzel.arclight.common.mod.server.command.ArclightDummyCommandSender;
 import net.minecraft.commands.CommandSource;
@@ -82,7 +82,7 @@ public abstract class CommandSourceStackMixin implements CommandSourceStackBridg
     @Override
     public CommandSender getBukkitSender() {
         var thus = (CommandSourceStack) (Object) this;
-        var sender = ((CommandSourceBridge) this.source).bridge$getBukkitSender(thus);
+        var sender = ((CommandSourceBridge) this.source).getBukkitSender(thus);
         // It means that this is a custom CommandSource
         return Objects.requireNonNullElseGet(sender, () -> new ArclightDummyCommandSender(thus));
     }

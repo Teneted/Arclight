@@ -4,7 +4,7 @@ import org.bukkit.craftbukkit.inventory.CraftMerchant;
 
 public interface MerchantBridge {
 
-    default CraftMerchant bridge$getCraftMerchant() {
+    default CraftMerchant getCraftMerchant() {
         return null;
     }
 }

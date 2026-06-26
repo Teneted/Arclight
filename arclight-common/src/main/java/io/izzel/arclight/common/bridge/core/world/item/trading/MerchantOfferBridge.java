@@ -4,7 +4,7 @@ import org.bukkit.craftbukkit.inventory.CraftMerchantRecipe;
 
 public interface MerchantOfferBridge {
 
-    default CraftMerchantRecipe bridge$asBukkit() {
+    default CraftMerchantRecipe asBukkit() {
         return null;
     }
 }

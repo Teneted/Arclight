@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Cancellable;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.serialization.Codec;
 import io.izzel.arclight.common.bridge.core.world.entity.EntityBridge;
@@ -15,11 +16,13 @@ import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
 import net.minecraft.network.protocol.game.ClientboundSetEntityLinkPacket;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,6 +41,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec2;
@@ -50,18 +54,28 @@ import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.entity.Vehicle;
+import org.bukkit.event.entity.EntityAirChangeEvent;
 import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityDismountEvent;
 import org.bukkit.event.entity.EntityDropItemEvent;
+import org.bukkit.event.entity.EntityMountEvent;
 import org.bukkit.event.entity.EntityPoseChangeEvent;
 import org.bukkit.event.entity.EntityRemoveEvent;
+import org.bukkit.event.entity.EntityUnleashEvent;
 import org.bukkit.event.vehicle.VehicleBlockCollisionEvent;
+import org.bukkit.event.vehicle.VehicleEnterEvent;
+import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.jspecify.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -69,6 +83,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Mixin(Entity.class)
@@ -126,8 +141,19 @@ public abstract class EntityMixin implements EntityBridge, EntityBridge_Activati
     @Shadow private Entity.@Nullable RemovalReason removalReason;
     @Shadow public abstract @Nullable String getEncodeId();
     @Shadow public abstract void setInvisible(boolean invisible);
+    @Shadow public abstract void gameEvent(Holder<GameEvent> event, @Nullable Entity sourceEntity);
+    @Shadow public abstract Level level();
     // @formatter:on
 
+    @Shadow
+    public abstract boolean isSwimming();
+
+    @Shadow
+    @Final
+    protected SynchedEntityData entityData;
+    @Shadow
+    @Final
+    private static EntityDataAccessor<Integer> DATA_AIR_SUPPLY_ID;
     // CraftBukkit start
     private static final int CURRENT_LEVEL = 2;
     private static boolean isLevelAtLeast(ValueInput tag, int level) {
@@ -458,6 +484,157 @@ public abstract class EntityMixin implements EntityBridge, EntityBridge_Activati
         // CraftBukkit end
     }
 
+    @Unique
+    private AtomicReference<EntityUnleashEvent.UnleashReason> arclight$unleashReason = new AtomicReference<>(null);
+
+    @Inject(method = "dropAllLeashConnections", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Leashable;dropLeash()V", ordinal = 0))
+    private void arclight$callEntityUnleashEvent(Player player, CallbackInfoReturnable<Boolean> cir) {
+        this.level().getCraftServer().getPluginManager().callEvent(new EntityUnleashEvent(this.getBukkitEntity(), arclight$unleashReason.get() != null ? arclight$unleashReason.get() : EntityUnleashEvent.UnleashReason.UNKNOWN)); // CraftBukkit
+        arclight$unleashReason.set(null);
+    }
+
+    @Inject(method = "shearOffAllLeashConnections", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;dropAllLeashConnections(Lnet/minecraft/world/entity/player/Player;)Z"))
+    private void arclight$unleashReasonShear(Player player, CallbackInfoReturnable<Boolean> cir) {
+        arclight$unleashReason.set(EntityUnleashEvent.UnleashReason.SHEAR);
+    }
+
+    @Inject(method = "dropAllLeashConnections", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Leashable;dropLeash()V", ordinal = 1))
+    private void arclight$callEntityUnleashEvent0(Player player, CallbackInfoReturnable<Boolean> cir, @Local Leashable leashable) {
+        // CraftBukkit start
+        if (leashable instanceof Entity entity) {
+            this.level().getCraftServer().getPluginManager().callEvent(new EntityUnleashEvent(entity.getBukkitEntity(), arclight$unleashReason.get() != null ? arclight$unleashReason.get() : EntityUnleashEvent.UnleashReason.UNKNOWN));
+        }
+        arclight$unleashReason.set(null);
+        // CraftBukkit end
+    }
+
+    private AtomicBoolean arclight$removePassenger = new AtomicBoolean(true);
+
+    @Inject(method = "removePassenger", at = @At(value = "INVOKE", target = "Lcom/google/common/collect/ImmutableList;size()I"))
+    private void arclight$callEntityEvents(Entity passenger, CallbackInfo ci) {
+        // CraftBukkit start
+        CraftEntity craft = (CraftEntity) passenger.getBukkitEntity().getVehicle();
+        Entity orig = craft == null ? null : craft.getHandle();
+        if (getBukkitEntity() instanceof Vehicle && passenger.getBukkitEntity() instanceof org.bukkit.entity.LivingEntity) {
+            VehicleExitEvent event = new VehicleExitEvent(
+                    (Vehicle) getBukkitEntity(),
+                    (org.bukkit.entity.LivingEntity) passenger.getBukkitEntity()
+            );
+            // Suppress during worldgen
+            if (this.valid) {
+                Bukkit.getPluginManager().callEvent(event);
+            }
+            CraftEntity craftn = (CraftEntity) passenger.getBukkitEntity().getVehicle();
+            Entity n = craftn == null ? null : craftn.getHandle();
+            if (event.isCancelled() || n != orig) {
+                arclight$removePassenger.set(false);
+            }
+        }
+
+        EntityDismountEvent event = new EntityDismountEvent(passenger.getBukkitEntity(), this.getBukkitEntity());
+        // Suppress during worldgen
+        if (this.valid) {
+            Bukkit.getPluginManager().callEvent(event);
+        }
+        if (event.isCancelled()) {
+            arclight$removePassenger.set(false);
+        }
+        // CraftBukkit end
+    }
+
+    @ModifyExpressionValue(method = "startRiding(Lnet/minecraft/world/entity/Entity;ZZ)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/EntityType;canSerialize()Z"))
+    private boolean arclight$checkForce(boolean original, @Local(ordinal = 0, argsOnly = true) boolean force) {
+        return !force && original;
+    }
+
+    @Inject(method = "startRiding(Lnet/minecraft/world/entity/Entity;ZZ)Z", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;isPassenger()Z"), cancellable = true)
+    private void arclight$callEntityEvents0(Entity entityToRide, boolean force, boolean sendEventAndTriggers, CallbackInfoReturnable<Boolean> cir) {
+        // CraftBukkit start
+        if (entityToRide.getBukkitEntity() instanceof Vehicle && this.getBukkitEntity() instanceof org.bukkit.entity.LivingEntity) {
+            VehicleEnterEvent event = new VehicleEnterEvent((Vehicle) entityToRide.getBukkitEntity(), this.getBukkitEntity());
+            // Suppress during worldgen
+            if (this.valid) {
+                Bukkit.getPluginManager().callEvent(event);
+            }
+            if (event.isCancelled()) {
+                cir.setReturnValue(false);
+            }
+        }
+
+        EntityMountEvent event = new EntityMountEvent(this.getBukkitEntity(), entityToRide.getBukkitEntity());
+        // Suppress during worldgen
+        if (this.valid) {
+            Bukkit.getPluginManager().callEvent(event);
+        }
+        if (event.isCancelled()) {
+            cir.setReturnValue(false);
+        }
+        // CraftBukkit end
+    }
+
+    @Inject(method = "removeVehicle", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;getRemovalReason()Lnet/minecraft/world/entity/Entity$RemovalReason;"), cancellable = true)
+    private void arclight$setActualVehicle(CallbackInfo ci, @Local Entity oldVehicle) {
+        if (!arclight$removePassenger.get()) {
+            this.vehicle = oldVehicle;
+            ci.cancel();
+            return;
+        }
+    }
+
+    @Inject(method = "removePassenger", at = @At("TAIL"))
+    private void arclight$setRemovePassenger(Entity passenger, CallbackInfo ci) {
+        arclight$removePassenger.set(true);
+    }
+
+    @ModifyExpressionValue(method = "handlePortal", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerLevel;isAllowedToEnterPortal(Lnet/minecraft/world/level/Level;)Z"))
+    private boolean arclight$allowCallEvents(boolean original, @Local(ordinal = 0) ServerLevel newLevel) {
+        return (((Entity) (Object) this) instanceof ServerPlayer && newLevel == null) || (newLevel != null && original);
+    }
+
+
+    @Inject(method = "setSwimming", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setSharedFlag(IZ)V"), cancellable = true)
+    private void arclight$callToggleSwimEvent(boolean swimming, CallbackInfo ci) {
+        // CraftBukkit start
+        if (valid && this.isSwimming() != swimming && ((Entity) (Object) this) instanceof LivingEntity) {
+            if (CraftEventFactory.callToggleSwimEvent((LivingEntity) (Object) this, swimming).isCancelled()) {
+                ci.cancel();
+                return;
+            }
+        }
+        // CraftBukkit end
+    }
+
+    @WrapWithCondition(method = "setInvisible", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/Entity;setSharedFlag(IZ)V"))
+    private boolean arclight$persistentInvisibilityCheck(Entity instance, int flag, boolean value) {
+        return !this.persistentInvisibility;
+    }
+
+    @ModifyConstant(method = "getMaxAirSupply", constant = @Constant(intValue = 300))
+    private int arclight$useMaxAirTicks(int constant) {
+        return maxAirTicks;
+    }
+
+    @Redirect(method = "setAirSupply", at = @At(value = "INVOKE", target = "Lnet/minecraft/network/syncher/SynchedEntityData;set(Lnet/minecraft/network/syncher/EntityDataAccessor;Ljava/lang/Object;)V"))
+    private <T> void arclight$callEntityAirChangeEvent(SynchedEntityData instance, EntityDataAccessor<T> accessor, T value, @Cancellable CallbackInfo ci, @Local(argsOnly = true) int supply) {
+        // CraftBukkit start
+        EntityAirChangeEvent event = new EntityAirChangeEvent(this.getBukkitEntity(), supply);
+        // Suppress during worldgen
+        if (this.valid) {
+            event.getEntity().getServer().getPluginManager().callEvent(event);
+        }
+        if (event.isCancelled() && this.getAirSupply() != supply) {
+            this.entityData.markDirty(DATA_AIR_SUPPLY_ID);
+            ci.cancel();
+        }
+        this.entityData.set(DATA_AIR_SUPPLY_ID, event.getAmount());
+        // CraftBukkit end
+    }
+
+    @Override
+    public void arclight$pushUnleashReason(EntityUnleashEvent.UnleashReason reason) {
+        arclight$unleashReason.set(reason);
+    }
+
     @Override
     public boolean saveAsPassenger(ValueOutput output, boolean includeAll) {
         if (this.removalReason != null && !this.removalReason.shouldSave()) {
@@ -587,6 +764,35 @@ public abstract class EntityMixin implements EntityBridge, EntityBridge_Activati
             CrashReportCategory category = report.addCategory("Entity being saved");
             this.fillCrashReportCategory(category);
             throw new ReportedException(report);
+        }
+    }
+
+    @Override
+    public boolean dropAllLeashConnections(@Nullable Player player, EntityUnleashEvent.UnleashReason reason) {
+        List<Leashable> leashables = Leashable.leashableLeashedTo(((Entity) (Object) this));
+        boolean dropped = !leashables.isEmpty();
+        if (this instanceof Leashable leashableThis) {
+            if (leashableThis.isLeashed()) {
+                this.level().getCraftServer().getPluginManager().callEvent(new EntityUnleashEvent(this.getBukkitEntity(), reason)); // CraftBukkit
+                leashableThis.dropLeash();
+                dropped = true;
+            }
+        }
+
+        for(Leashable leashable : leashables) {
+            // CraftBukkit start
+            if (leashable instanceof Entity entity) {
+                this.level().getCraftServer().getPluginManager().callEvent(new EntityUnleashEvent(entity.getBukkitEntity(), reason));
+            }
+            // CraftBukkit end
+            leashable.dropLeash();
+        }
+
+        if (dropped) {
+            this.gameEvent(GameEvent.SHEAR, player);
+            return true;
+        } else {
+            return false;
         }
     }
 

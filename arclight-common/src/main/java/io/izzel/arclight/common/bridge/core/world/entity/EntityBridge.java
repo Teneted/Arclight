@@ -11,6 +11,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
 import net.minecraft.world.entity.boss.enderdragon.EnderDragonPart;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.bukkit.Location;
@@ -18,8 +19,10 @@ import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.event.CraftPortalEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityRemoveEvent;
+import org.bukkit.event.entity.EntityUnleashEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.projectiles.ProjectileSource;
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 
@@ -251,6 +254,13 @@ public interface EntityBridge extends CommandSourceBridge {
 
     default boolean saveAsPassenger(ValueOutput output, boolean includeAll) {
         return false;
+    }
+
+    default boolean dropAllLeashConnections(@Nullable Player player, EntityUnleashEvent.UnleashReason reason) {
+        return false;
+    }
+
+    default void arclight$pushUnleashReason(EntityUnleashEvent.UnleashReason reason) {
     }
 
     /**

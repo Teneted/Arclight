@@ -15,6 +15,8 @@ import io.izzel.arclight.common.bridge.optimization.EntityBridge_ActivationRange
 import net.minecraft.CrashReport;
 import net.minecraft.CrashReportCategory;
 import net.minecraft.ReportedException;
+import net.minecraft.commands.CommandSource;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.UUIDUtil;
@@ -42,6 +44,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec2;
@@ -49,6 +52,7 @@ import net.minecraft.world.phys.Vec3;
 import org.bukkit.Bukkit;
 import org.bukkit.Server;
 import org.bukkit.block.BlockFace;
+import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.craftbukkit.entity.CraftEntity;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
@@ -629,6 +633,40 @@ public abstract class EntityMixin implements EntityBridge, EntityBridge_Activati
         this.entityData.set(DATA_AIR_SUPPLY_ID, event.getAmount());
         // CraftBukkit end
     }
+
+    @ModifyArg(method = "createCommandSourceStackForNameResolution", at = @At(value = "INVOKE", target = "Lnet/minecraft/commands/CommandSourceStack;<init>(Lnet/minecraft/commands/CommandSource;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/phys/Vec2;Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/server/permissions/PermissionSet;Ljava/lang/String;Lnet/minecraft/network/chat/Component;Lnet/minecraft/server/MinecraftServer;Lnet/minecraft/world/entity/Entity;)V"), index = 0)
+    private CommandSource arclight$resetCmdSrc(CommandSource source) {
+        return commandSource;
+    }
+
+    // CraftBukkit start
+    private final CommandSource commandSource = new CommandSource() {
+
+        @Override
+        public void sendSystemMessage(Component component) {
+        }
+
+        @Override
+        public CommandSender getBukkitSender(CommandSourceStack wrapper) {
+            return EntityMixin.this.getBukkitEntity();
+        }
+
+        @Override
+        public boolean acceptsSuccess() {
+            return ((ServerLevel) EntityMixin.this.level()).getGameRules().get(GameRules.SEND_COMMAND_FEEDBACK);
+        }
+
+        @Override
+        public boolean acceptsFailure() {
+            return true;
+        }
+
+        @Override
+        public boolean shouldInformAdmins() {
+            return true;
+        }
+    };
+    // CraftBukkit end
 
     @Override
     public void arclight$pushUnleashReason(EntityUnleashEvent.UnleashReason reason) {

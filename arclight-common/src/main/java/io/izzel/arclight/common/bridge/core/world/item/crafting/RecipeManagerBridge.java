@@ -6,10 +6,10 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 public interface RecipeManagerBridge {
 
     default void bridge$addRecipe(RecipeHolder<?> recipe) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$clearRecipes() {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

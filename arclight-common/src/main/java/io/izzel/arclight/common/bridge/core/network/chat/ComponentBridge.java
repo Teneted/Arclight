@@ -7,6 +7,6 @@ import java.util.stream.Stream;
 public interface ComponentBridge extends Iterable<Component>{
 
     default Stream<Component> stream() {
-        return Stream.empty();
+        throw new IllegalStateException("Not implemented");
     }
 }

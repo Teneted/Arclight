@@ -11,21 +11,22 @@ import net.minecraft.world.level.storage.PrimaryLevelData;
 public interface DedicatedServerBridge {
 
     default String runCommand(RconConsoleSource rconConsoleSource, String s) {
-        return s;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$platform$exitNow() {
+        throw new IllegalStateException("Not implemented");
     }
 
     default WorldLoader.DataLoadContext arclight$dataLoadContext() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$forceUpgradeIfNeeded(LevelStorageSource.LevelStorageAccess worldSession, RegistryAccess.Frozen dimensions) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$prepareAndAddLevel(ServerLevel level, PrimaryLevelData levelData, WorldOptions worldOptions) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

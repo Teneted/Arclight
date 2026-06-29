@@ -8,22 +8,22 @@ import org.bukkit.inventory.InventoryView;
 public interface AbstractContainerMenuBridge {
 
     default InventoryView getBukkitView() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$transferTo(AbstractContainerMenu other, CraftHumanEntity player) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Component bridge$getTitle() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setTitle(Component title) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isCheckReachable() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 }

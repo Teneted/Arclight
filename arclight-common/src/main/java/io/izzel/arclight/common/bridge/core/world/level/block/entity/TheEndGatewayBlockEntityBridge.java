@@ -8,6 +8,6 @@ import net.minecraft.world.level.block.state.BlockState;
 public interface TheEndGatewayBlockEntityBridge {
 
     default void bridge$playerTeleportEvent(Level level, BlockPos pos, BlockState state, Entity entityIn, BlockPos dest) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

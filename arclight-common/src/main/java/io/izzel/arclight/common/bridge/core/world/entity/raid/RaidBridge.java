@@ -6,6 +6,6 @@ import net.minecraft.world.entity.raid.Raider;
 public interface RaidBridge {
 
     default Collection<Raider> bridge$getRaiders() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

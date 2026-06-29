@@ -26,74 +26,75 @@ import java.util.Map;
 public interface LevelBridge extends LevelWriterBridge, LevelAccessorBridge {
 
     default boolean bridge$isCaptureBlockStates() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setCaptureBlockStates(boolean captureBlockStates) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isCaptureTreeGeneration() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setCaptureTreeGeneration(boolean captureTreeGeneration) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Map<BlockPos, CapturedBlockState> bridge$getCapturedBlockStates() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setCapturedBlockStates(Map<BlockPos, CapturedBlockState> capturedBlockStates) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default CraftWorld getWorld() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isPopulating() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPopulating(boolean populating) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default ChunkGenerator bridge$getGenerator() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default BlockEntity getBlockEntity(BlockPos pos, boolean validate) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default SpigotWorldConfig bridge$spigotConfig() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Object2LongOpenHashMap<SpawnCategory> bridge$ticksPerSpawnCategory() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setLastPhysicsProblem(BlockPos pos) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$preventPoiUpdated() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$preventPoiUpdated(boolean b) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$forge$notifyAndUpdatePhysics(BlockPos pos, LevelChunk chunk, BlockState oldBlock, BlockState newBlock, int i, int j) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$forge$onBlockPlace(BlockPos pos, LivingEntity livingEntity, Direction direction) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$forge$mobGriefing(Entity entity) {
@@ -103,37 +104,43 @@ public interface LevelBridge extends LevelWriterBridge, LevelAccessorBridge {
         return GameRules.MOB_GRIEFING.defaultValue();
     }
 
-    default void bridge$forge$onPotionBrewed(NonNullList<ItemStack> stacks) {}
+    default void bridge$forge$onPotionBrewed(NonNullList<ItemStack> stacks) {
+        throw new IllegalStateException("Not implemented");
+    }
 
     default boolean bridge$forge$restoringBlockSnapshots() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Map<BlockPos, CapturedBlockState> bridge$getCapturedBlockState() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Map<BlockPos, BlockEntity> bridge$getCapturedBlockEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
-    default void bridge$platform$startCaptureBlockBreak() {}
+    default void bridge$platform$startCaptureBlockBreak() {
+        throw new IllegalStateException("Not implemented");
+    }
 
     default boolean bridge$isCapturingBlockBreak() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
-    default void bridge$platform$endCaptureBlockBreak() {}
+    default void bridge$platform$endCaptureBlockBreak() {
+        throw new IllegalStateException("Not implemented");
+    }
 
     default CraftServer getCraftServer() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ResourceKey<LevelStem> getTypeKey(){
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void notifyAndUpdatePhysics(BlockPos blockpos, LevelChunk levelchunk, BlockState oldBlock, BlockState newBlock, BlockState actualBlock, int i, int j) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

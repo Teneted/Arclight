@@ -6,6 +6,6 @@ import org.bukkit.inventory.Recipe;
 public interface RecipeBridge {
 
     default Recipe bridge$toBukkitRecipe(NamespacedKey id) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

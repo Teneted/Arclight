@@ -12,42 +12,42 @@ import org.jetbrains.annotations.Nullable;
 public interface MobBridge extends LivingEntityBridge {
 
     default void bridge$pushGoalTargetReason(EntityTargetEvent.TargetReason reason, boolean fireEvent) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushTransformReason(EntityTransformEvent.TransformReason transformReason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$setGoalTarget(LivingEntity livingEntity, EntityTargetEvent.TargetReason reason, boolean fireEvent) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$lastGoalTargetResult() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isPersistenceRequired() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPersistenceRequired(boolean value) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setAware(boolean aware) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$captureItemDrop(ItemEntity itemEntity) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default AgeableMob bridge$forge$onBabyEntitySpawn(Mob partner, @Nullable AgeableMob proposedChild) {
-        return proposedChild;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$common$animalTameEvent(Player player) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 }

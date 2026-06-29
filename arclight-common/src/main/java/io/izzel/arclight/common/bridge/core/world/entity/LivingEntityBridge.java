@@ -25,72 +25,72 @@ import java.util.Optional;
 public interface LivingEntityBridge extends EntityBridge {
 
     default void bridge$setSlot(EquipmentSlot slotIn, ItemStack stack, boolean silent) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$playEquipSound(EquipmentSlot slot, ItemStack oldItem, ItemStack newItem, boolean silent) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$canPickUpLoot() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$getExpReward(Entity entity) {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setExpToDrop(int amount) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$getExpToDrop() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushHealReason(EntityRegainHealthEvent.RegainReason regainReason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$heal(float healAmount, EntityRegainHealthEvent.RegainReason regainReason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushEffectCause(EntityPotionEffectEvent.Cause cause) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$addEffect(MobEffectInstance effect, EntityPotionEffectEvent.Cause cause) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$removeEffect(Holder<MobEffect> effect, EntityPotionEffectEvent.Cause cause) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$removeAllEffects(EntityPotionEffectEvent.Cause cause) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Optional<EntityPotionEffectEvent.Cause> bridge$getEffectCause() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushKnockbackCause(Entity attacker, EntityKnockbackEvent.KnockbackCause cause) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     @Override
     default CraftLivingEntity getBukkitEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$forge$getExperienceDrop(LivingEntity entity, Player attackingPlayer, int originalExperience) {
-        return originalExperience;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$forge$onLivingUseTotem(LivingEntity entity, DamageSource damageSource, ItemStack totem, InteractionHand hand) {
-        return true;
+        throw new IllegalStateException("Not implemented");
     }
 
     enum LivingTargetType {
@@ -98,18 +98,20 @@ public interface LivingEntityBridge extends EntityBridge {
         MOB_TARGET
     }
 
-    default void bridge$forge$onLivingConvert(LivingEntity entity, LivingEntity outcome) {}
+    default void bridge$forge$onLivingConvert(LivingEntity entity, LivingEntity outcome) {
+        throw new IllegalStateException("Not implemented");
+    }
 
     default boolean bridge$forge$canEntityDestroy(Level level, BlockPos pos, LivingEntity entity) {
-        return true;
+        throw new IllegalStateException("Not implemented");
     }
 
     @Nullable
     default EntityDamageEvent arclight$fireEntityDamageEvent(DamageSource source, float original) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ArrayList<org.bukkit.inventory.ItemStack> bridge$getDrops() {
-        return new ArrayList<>();
+        throw new IllegalStateException("Not implemented");
     }
 }

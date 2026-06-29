@@ -5,6 +5,6 @@ import net.minecraft.world.level.block.Block;
 public interface FireBlockBridge {
 
     default boolean bridge$canBurn(Block block) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 }

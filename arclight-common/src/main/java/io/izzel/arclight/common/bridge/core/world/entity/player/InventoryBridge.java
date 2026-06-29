@@ -5,6 +5,6 @@ import net.minecraft.world.item.ItemStack;
 public interface InventoryBridge {
 
     default int bridge$canHold(ItemStack stack) {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 }

@@ -5,6 +5,6 @@ import net.minecraft.world.level.Level;
 public interface SculkSpreaderBridge {
 
     default void bridge$setLevel(Level level) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

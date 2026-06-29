@@ -12,14 +12,17 @@ import java.util.Set;
 public interface GameRulesBridge {
 
     default void setAll(final GameRules other, final @Nullable ServerLevel server) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default void setAll(GameRuleMap gameRulesMap, @Nullable ServerLevel server) {
+        throw new IllegalStateException("Not implemented");
     }
     default <T> void set(final GameRule<T> gameRule, final T value, final @Nullable ServerLevel server) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default Set<GameRule<?>> arclight$getAllRules() {
-        return Set.of();
+        throw new IllegalStateException("Not implemented");
     }
 }

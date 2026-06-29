@@ -5,6 +5,6 @@ import net.minecraft.world.entity.LivingEntity;
 public interface EnderManBridge {
 
     default void bridge$updateTarget(LivingEntity livingEntity) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

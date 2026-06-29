@@ -6,11 +6,19 @@ import org.jetbrains.annotations.Nullable;
 
 public interface PortalInfoBridge {
 
-    void bridge$setPortalEventInfo(CraftPortalEvent event);
+    default void bridge$setPortalEventInfo(CraftPortalEvent event) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    CraftPortalEvent bridge$getPortalEventInfo();
+    default CraftPortalEvent bridge$getPortalEventInfo() {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    void bridge$setWorld(ServerLevel world);
+    default void bridge$setWorld(ServerLevel world) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    @Nullable ServerLevel bridge$getWorld();
+    default @Nullable ServerLevel bridge$getWorld() {
+        throw new IllegalStateException("Not implemented");
+    }
 }

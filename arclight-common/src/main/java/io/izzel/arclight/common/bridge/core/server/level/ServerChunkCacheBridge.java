@@ -7,28 +7,30 @@ import java.io.IOException;
 public interface ServerChunkCacheBridge {
 
     default boolean bridge$tickDistanceManager() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ThreadedLevelLightEngine bridge$getLightManager() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean isChunkLoaded(int chunkX, int chunkZ) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void close(boolean save) throws IOException {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void purgeUnload() {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setViewDistance(int viewDistance) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setSimulationDistance(int simDistance) {
+        throw new IllegalStateException("Not implemented");
     }
 }

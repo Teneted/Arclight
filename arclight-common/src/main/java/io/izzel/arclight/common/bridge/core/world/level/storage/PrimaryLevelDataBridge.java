@@ -10,33 +10,34 @@ import net.minecraft.world.level.dimension.LevelStem;
 public interface PrimaryLevelDataBridge {
 
     default void setWorld(ServerLevel world) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default ServerLevel bridge$getWorld() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default LevelSettings bridge$getWorldSettings() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Lifecycle bridge$getLifecycle() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void checkName(String name) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$offerCustomDimensions(Registry<LevelStem> registry) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Tag bridge$getPdc() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPdc(Tag pdc) {
+        throw new IllegalStateException("Not implemented");
     }
 }

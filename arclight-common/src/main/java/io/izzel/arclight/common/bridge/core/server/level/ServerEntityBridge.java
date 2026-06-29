@@ -8,22 +8,22 @@ import java.util.Set;
 public interface ServerEntityBridge {
 
     default void bridge$setTrackedPlayers(Set<ServerPlayerConnection> trackedPlayers) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Entity bridge$getTrackingEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$syncPosition() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$instantSyncPosition() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$instantSyncMotion() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 }

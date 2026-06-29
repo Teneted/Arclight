@@ -13,16 +13,18 @@ import org.jetbrains.annotations.Nullable;
 public interface ItemBridge {
 
     default int bridge$forge$onArrowLoose(ItemStack stack, Level level, Player player, int charge, boolean hasAmmo) {
-        return charge;
+        throw new IllegalStateException("Not implemented");
     }
 
     default AbstractArrow bridge$forge$customArrow(BowItem bowItem, ItemStack weapon, ItemStack projectile, AbstractArrow arrow) {
-        return arrow;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$forge$onChorusFruitTeleport(LivingEntity entity, double targetX, double targetY, double targetZ) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
-    default void bridge$forge$onPlayerDestroyItem(Player player, @NotNull ItemStack stack, @Nullable InteractionHand hand) {}
+    default void bridge$forge$onPlayerDestroyItem(Player player, @NotNull ItemStack stack, @Nullable InteractionHand hand) {
+        throw new IllegalStateException("Not implemented");
+    }
 }

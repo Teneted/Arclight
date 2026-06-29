@@ -5,10 +5,10 @@ import net.minecraft.server.level.ServerLevel;
 public interface WeatherDataBridge {
 
     default void setWorld(ServerLevel world) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default ServerLevel bridge$getWorld() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

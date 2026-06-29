@@ -8,43 +8,43 @@ import net.minecraft.world.item.ItemStack;
 public interface FoodDataBridge {
 
     default int bridge$getSaturatedRegenRate() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setSaturatedRegenRate(int saturatedRegenRate) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$getUnsaturatedRegenRate() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setUnsaturatedRegenRate(int unsaturatedRegenRate) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$getStarvationRate() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setStarvationRate(int starvationRate) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void eat(FoodProperties foodproperties, ItemStack itemstack, ServerPlayer serverplayer) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
 
     default void bridge$setEntityHuman(ServerPlayer playerEntity) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Player bridge$getEntityHuman() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushEatStack(ItemStack stack) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

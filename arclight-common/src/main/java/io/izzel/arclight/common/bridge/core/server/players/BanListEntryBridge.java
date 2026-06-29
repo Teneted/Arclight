@@ -5,6 +5,6 @@ import java.util.Date;
 public interface BanListEntryBridge {
 
     default Date getCreated() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

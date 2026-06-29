@@ -5,10 +5,10 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 public interface TeleportTransitionBridge {
 
     default void bridge$setTeleportCause(PlayerTeleportEvent.TeleportCause cause) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default PlayerTeleportEvent.TeleportCause bridge$getTeleportCause() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

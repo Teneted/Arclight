@@ -8,34 +8,34 @@ import net.minecraft.world.item.ItemStack;
 public interface ServerPlayerGameModeBridge {
 
     default boolean bridge$isFiredInteract() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setFiredInteract(boolean b) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$getInteractResult() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setInteractResult(boolean b) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$handleBlockDrop(ArclightCaptures.BlockBreakEventContext breakEventContext, BlockPos pos) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default BlockPos bridge$getInteractPosition() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default InteractionHand bridge$getInteractHand() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ItemStack bridge$getInteractItemStack() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

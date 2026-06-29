@@ -11,18 +11,18 @@ import net.minecraft.world.level.LevelReader;
 public interface ItemStackBridge {
 
     default void arclight$restorePatch(DataComponentPatch datacomponentpatch) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$setItem(Item item) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default InteractionResult bridge$forge$onItemUseFirst(UseOnContext context) {
-        return InteractionResult.PASS;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$forge$doesSneakBypassUse(LevelReader level, BlockPos pos, Player player) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 }

@@ -8,9 +8,10 @@ import java.util.function.BiConsumer;
 public interface LootDataTypeBridge<T extends Validatable> {
 
     default BiConsumer<ResourceKey<T>, T> bridge$getPostValidate() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPostValidate(BiConsumer<ResourceKey<T>, T> postValidate) {
+        throw new IllegalStateException("Not implemented");
     }
 }

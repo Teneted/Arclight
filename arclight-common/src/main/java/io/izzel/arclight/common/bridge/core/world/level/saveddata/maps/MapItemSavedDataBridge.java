@@ -9,18 +9,18 @@ import java.util.List;
 public interface MapItemSavedDataBridge {
 
     default CraftMapView bridge$getMapView() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default MapId bridge$getId() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setId(MapId id) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default List<MapItemSavedData.HoldingPlayer> bridge$getCarriedBy() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

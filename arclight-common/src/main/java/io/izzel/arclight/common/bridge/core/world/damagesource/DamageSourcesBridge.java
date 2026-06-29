@@ -10,18 +10,18 @@ import org.jetbrains.annotations.Nullable;
 public interface DamageSourcesBridge {
 
     default DamageSource melting() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource poison() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource explosion(@Nullable Entity entity, @Nullable Entity entity1, ResourceKey<DamageType> resourceKey) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource badRespawnPointExplosion(Vec3 vec3, org.bukkit.block.BlockState blockState) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

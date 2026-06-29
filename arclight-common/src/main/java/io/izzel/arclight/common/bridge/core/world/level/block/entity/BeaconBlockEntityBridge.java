@@ -5,10 +5,10 @@ import org.bukkit.potion.PotionEffect;
 public interface BeaconBlockEntityBridge {
 
     default PotionEffect bridge$getPrimaryEffect() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default PotionEffect bridge$getSecondaryEffect() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

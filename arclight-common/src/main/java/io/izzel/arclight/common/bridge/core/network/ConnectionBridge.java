@@ -8,26 +8,26 @@ import java.util.UUID;
 public interface ConnectionBridge {
 
     default UUID bridge$getSpoofedUUID() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setSpoofedUUID(UUID spoofedUUID) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Property[] bridge$getSpoofedProfile() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setSpoofedProfile(Property[] spoofedProfile) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default String bridge$getHostname() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setHostname(String hostname) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

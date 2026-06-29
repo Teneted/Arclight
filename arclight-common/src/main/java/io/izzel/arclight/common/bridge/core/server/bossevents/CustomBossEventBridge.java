@@ -5,14 +5,14 @@ import org.bukkit.boss.KeyedBossBar;
 public interface CustomBossEventBridge {
 
     default KeyedBossBar bridge$getBossBar() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridget$setBossBar(KeyedBossBar bossBar) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default KeyedBossBar getBukkitEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

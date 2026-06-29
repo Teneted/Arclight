@@ -5,14 +5,14 @@ import net.minecraft.world.level.levelgen.flat.FlatLevelGeneratorSettings;
 
 public interface FlatLevelGeneratorSettingsBridge {
     default void bridge$setBiomeSource(BiomeSource biomeSource) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default FlatLevelGeneratorSettings bridge$withBiomeSource(BiomeSource biomeSource) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default BiomeSource bridge$getBiomeSource() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

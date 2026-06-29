@@ -5,10 +5,10 @@ import io.netty.buffer.ByteBuf;
 public interface DiscardedPayloadBridge {
 
     default ByteBuf data() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushData(ByteBuf buf) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

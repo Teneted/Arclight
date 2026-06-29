@@ -16,19 +16,19 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 public interface ServerGamePacketListenerImplBridge extends ServerCommonPacketListenerImplBridge {
 
     default void bridge$pushTeleportCause(PlayerTeleportEvent.TeleportCause cause) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$teleport(Location dest) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushNoTeleportEvent() {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$teleportCancelled() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Product3<Boolean /* Cancelled */, ItemStack /* SwappedToMainHand */, ItemStack /* SwappedToOffHand */>
@@ -38,26 +38,26 @@ public interface ServerGamePacketListenerImplBridge extends ServerCommonPacketLi
 
     default InteractionResult bridge$platform$onInteractEntityAt(ServerPlayer player, Entity entity, Vec3 vec,
                                                                  InteractionHand interactionHand) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$platform$setLastPosX(double d) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$platform$setLastPosY(double d) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$platform$setLastPosZ(double d) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$platform$setLastPitch(float f) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$platform$setLastYaw(float f) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

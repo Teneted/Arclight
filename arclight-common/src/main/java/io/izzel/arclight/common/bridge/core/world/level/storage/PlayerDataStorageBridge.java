@@ -9,10 +9,10 @@ import net.minecraft.world.entity.player.Player;
 public interface PlayerDataStorageBridge {
 
     default Optional<CompoundTag> load(Player player) {
-        return Optional.empty();
+        throw new IllegalStateException("Not implemented");
     }
 
     default File getPlayerDir() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

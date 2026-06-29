@@ -5,6 +5,6 @@ import net.minecraft.network.chat.Component;
 public interface CombatTrackerBridge {
 
     default void bridge$setDeathMessage(Component component) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

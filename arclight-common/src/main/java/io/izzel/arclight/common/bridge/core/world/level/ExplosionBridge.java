@@ -9,28 +9,30 @@ import java.util.List;
 public interface ExplosionBridge {
 
     default Entity bridge$getExploder() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default float bridge$getSize() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setSize(float size) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Explosion.BlockInteraction bridge$getMode() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$wasCancelled() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default float bridge$getYield() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
-    default void bridge$forge$onExplosionDetonate(Level level, Explosion explosion, List<Entity> list, double diameter) {}
+    default void bridge$forge$onExplosionDetonate(Level level, Explosion explosion, List<Entity> list, double diameter) {
+        throw new IllegalStateException("Not implemented");
+    }
 }

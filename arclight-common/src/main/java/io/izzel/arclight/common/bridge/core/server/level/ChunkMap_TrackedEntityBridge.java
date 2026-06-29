@@ -7,18 +7,18 @@ import net.minecraft.world.entity.Entity;
 public interface ChunkMap_TrackedEntityBridge {
 
     default ServerEntity bridge$getServerEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Entity bridge$getEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default SectionPos bridge$getLastSectionPos() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setLastSectionPos(SectionPos pos) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

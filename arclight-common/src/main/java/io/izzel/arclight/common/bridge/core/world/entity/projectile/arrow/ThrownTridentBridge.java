@@ -5,6 +5,6 @@ import net.minecraft.world.item.ItemStack;
 public interface ThrownTridentBridge {
 
     default void bridge$setThrownStack(ItemStack itemStack) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

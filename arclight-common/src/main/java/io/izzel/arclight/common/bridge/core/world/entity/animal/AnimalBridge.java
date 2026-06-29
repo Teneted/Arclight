@@ -6,6 +6,6 @@ import net.minecraft.world.item.ItemStack;
 public interface AnimalBridge extends MobBridge {
 
     default ItemStack bridge$getBreedItem() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

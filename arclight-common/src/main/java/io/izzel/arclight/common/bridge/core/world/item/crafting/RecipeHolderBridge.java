@@ -5,6 +5,6 @@ import org.bukkit.inventory.Recipe;
 public interface RecipeHolderBridge {
 
     default Recipe bridge$toBukkitRecipe() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

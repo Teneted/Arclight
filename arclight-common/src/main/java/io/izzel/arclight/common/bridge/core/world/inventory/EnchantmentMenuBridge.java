@@ -14,6 +14,6 @@ public interface EnchantmentMenuBridge {
     }
 
     default int bridge$forge$onEnchantmentLevelSet(Level level, BlockPos pos, int enchantRow, int power, ItemStack itemStack, int enchantmentLevel) {
-        return enchantmentLevel;
+        throw new IllegalStateException("Not implemented");
     }
 }

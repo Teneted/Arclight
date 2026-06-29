@@ -6,30 +6,30 @@ import net.minecraft.server.level.ThreadedLevelLightEngine;
 public interface ServerChunkProviderBridge {
 
     default void bridge$close(boolean save) throws IOException {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$purgeUnload() {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$tickDistanceManager() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isChunkLoaded(int x, int z) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ThreadedLevelLightEngine bridge$getLightManager() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setViewDistance(int viewDistance) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setSimulationDistance(int simDistance) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

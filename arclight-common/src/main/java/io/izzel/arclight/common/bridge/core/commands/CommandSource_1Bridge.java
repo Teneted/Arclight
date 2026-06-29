@@ -6,6 +6,6 @@ import org.bukkit.command.CommandSender;
 public interface CommandSource_1Bridge {
 
     default CommandSender getBukkitSender(CommandSourceStack wrapper) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

@@ -9,14 +9,14 @@ import java.util.List;
 public interface AbstractFurnaceBlockEntityBridge {
 
     default List<RecipeHolder<?>> bridge$dropExp(ServerPlayer entity, ItemStack itemStack, int amount) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$getBurnDuration(ItemStack stack) {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isLit() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 }

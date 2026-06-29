@@ -6,7 +6,7 @@ import org.bukkit.Location;
 public interface PosContainerBridge extends AbstractContainerMenuBridge {
 
     default ContainerLevelAccess bridge$getWorldPos() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Location bridge$getWorldLocation() {

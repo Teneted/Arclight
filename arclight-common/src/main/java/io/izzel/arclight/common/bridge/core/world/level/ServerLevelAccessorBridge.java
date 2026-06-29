@@ -5,5 +5,6 @@ import net.minecraft.world.entity.Entity;
 public interface ServerLevelAccessorBridge {
 
     default void addFreshEntityWithPassengers(Entity entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason reason) {
+        throw new IllegalStateException("Not implemented");
     }
 }

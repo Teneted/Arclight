@@ -8,6 +8,6 @@ import java.util.List;
 public interface LivingEntityBridge_Vanilla {
 
     default void arclight$vanilla$callLivingDropsEvent(DamageSource source, List<ItemEntity> capturedDrops) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

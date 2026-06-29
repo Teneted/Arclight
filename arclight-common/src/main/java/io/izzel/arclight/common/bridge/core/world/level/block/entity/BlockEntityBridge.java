@@ -5,6 +5,6 @@ import org.bukkit.inventory.InventoryHolder;
 public interface BlockEntityBridge {
 
     default InventoryHolder bridge$getOwner() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

@@ -6,84 +6,91 @@ import net.minecraft.world.entity.Entity;
 public interface DamageSourceBridge {
 
     default DamageSource sweep() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean isSweep() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource melting() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean isMelting() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource poison() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean isPoison() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Entity getDamager() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Entity getCausingDamager() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource customEntityDamager(Entity entity) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource customCausingEntityDamager(Entity entity) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default org.bukkit.block.Block getDirectBlock() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource directBlock(net.minecraft.world.level.Level level, net.minecraft.core.BlockPos blockPosition) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource directBlock(org.bukkit.block.Block block) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default org.bukkit.block.BlockState getDirectBlockState() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default DamageSource directBlockState(org.bukkit.block.BlockState blockState) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setDirectBlock(org.bukkit.block.Block block) {
+        throw new IllegalStateException("Not implemented");
     }
 
 
     default void bridge$setDirectBlockState(org.bukkit.block.BlockState blockState) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setCustomCausingEntity(Entity customEntityDamager) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setCustomCausingEntityDamager(Entity entity) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setSweep(boolean sweep) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setMelting(boolean melting) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPoison(boolean poison) {
+        throw new IllegalStateException("Not implemented");
     }
 }

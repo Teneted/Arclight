@@ -10,30 +10,30 @@ import java.util.function.BooleanSupplier;
 public interface ChunkMapBridge {
 
     default void bridge$tick(BooleanSupplier hasMoreTime) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Iterable<ChunkHolder> bridge$getLoadedChunksIterable() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$tickEntityTracker() {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default ArclightCallbackExecutor bridge$getCallbackExecutor() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ChunkHolder bridge$chunkHolderAt(long chunkPos) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setViewDistance(int i) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setChunkGenerator(ChunkGenerator generator) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

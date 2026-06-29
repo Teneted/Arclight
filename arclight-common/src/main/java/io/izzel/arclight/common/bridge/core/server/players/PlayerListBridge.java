@@ -16,36 +16,38 @@ import java.util.List;
 public interface PlayerListBridge {
 
     default void bridge$setPlayers(List<ServerPlayer> players) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default List<ServerPlayer> bridge$getPlayers() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default CraftServer bridge$getCraftServer() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ServerPlayer bridge$canPlayerLogin(SocketAddress socketAddress, GameProfile gameProfile, ServerLoginPacketListenerImpl handler) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$sendMessage(Component[] components) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushRespawnCause(PlayerRespawnEvent.RespawnReason respawnReason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$platform$onTravelToDimension(Player player, ResourceKey<Level> dimension) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$platform$onPlayerChangedDimension(Player player, ResourceKey<Level> fromDim, ResourceKey<Level> toDim) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$platform$onPlayerRespawn(Player player, boolean endConquered) {
+        throw new IllegalStateException("Not implemented");
     }
 }

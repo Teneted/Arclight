@@ -29,118 +29,119 @@ import java.util.List;
 public interface EntityBridge extends CommandSourceBridge {
 
     default float getBukkitYaw() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean isChunkLoaded() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default int getDefaultMaxAirSupply() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setOnFire(float seconds, boolean callEvent) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default CraftEntity getBukkitEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setBukkitEntity(CraftEntity craftEntity) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isPersist() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPersist(boolean persist) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isValid() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setValid(boolean valid) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setVisibleByDefault(boolean visible) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isVisibleByDefault() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isInWorld() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setInWorld(boolean inWorld) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default ProjectileSource bridge$getProjectileSource() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setProjectileSource(ProjectileSource projectileSource) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isChunkLoaded() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isLastDamageCancelled() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setLastDamageCancelled(boolean cancelled) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default List<Entity> bridge$getPassengers() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setRideCooldown(int rideCooldown) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$getRideCooldown() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setLastLavaContact(BlockPos pos) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$revive() {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushEntityRemoveCause(EntityRemoveEvent.Cause cause) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default CraftPortalEvent bridge$callPortalEvent(Entity entity, Location exit, PlayerTeleportEvent.TeleportCause cause, int searchRadius, int creationRadius) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$pluginRemoved() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isForceDrops() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setForceDrops(boolean b) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$forge$isPartEntity() {
@@ -161,27 +162,27 @@ public interface EntityBridge extends CommandSourceBridge {
     }
 
     default boolean bridge$forge$canUpdate() {
-        return true;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$pushAddEntityReason(CreatureSpawnEvent.SpawnReason reason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default CreatureSpawnEvent.SpawnReason arclight$getAddEntityReason() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$pushExtraSpawnReason(ArclightSpawnReason reason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default ArclightSpawnReason arclight$getExtraSpawnReason() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ItemEntity arclight$spawnAtLocationNoAdd(ItemStack stack, float yOffset) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ItemEntity arclight$spawnAtLocationNoAdd(ItemStack stack) {
@@ -189,78 +190,95 @@ public interface EntityBridge extends CommandSourceBridge {
     }
 
     default boolean bridge$isGeneration() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setGeneration(boolean generation) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$getMaxAirTicks() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setMaxAirTicks(int maxAirTicks) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isPersistentInvisibility() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPersistentInvisibility(boolean persistentInvisibility) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default BlockPos bridge$getLastLavaContact() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isPluginRemoved() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPluginRemoved(boolean pluginRemoved) {
+        throw new IllegalStateException("Not implemented");
     }
 
-    default void discard(EntityRemoveEvent.Cause cause) {}
+    default void discard(EntityRemoveEvent.Cause cause) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    default void refreshEntityData(ServerPlayer to) {}
+    default void refreshEntityData(ServerPlayer to) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    default void remove(Entity.RemovalReason entity_removalreason, EntityRemoveEvent.Cause cause) {}
+    default void remove(Entity.RemovalReason entity_removalreason, EntityRemoveEvent.Cause cause) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    default void postTick() {}
+    default void postTick() {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    default void setRemoved(Entity.RemovalReason reason, EntityRemoveEvent.Cause cause) {}
+    default void setRemoved(Entity.RemovalReason reason, EntityRemoveEvent.Cause cause) {
+        throw new IllegalStateException("Not implemented");
+    }
 
     default void igniteForSeconds(float numberOfSeconds, boolean callEvent) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default SoundEvent getSwimSound0() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default SoundEvent getSwimSplashSound0() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default SoundEvent getSwimHighSpeedSplashSound0() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean canCollideWithBukkit(Entity entity) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void saveWithoutId(ValueOutput output, boolean includeAll) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean saveAsPassenger(ValueOutput output, boolean includeAll) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean dropAllLeashConnections(@Nullable Player player, EntityUnleashEvent.UnleashReason reason) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$pushUnleashReason(EntityUnleashEvent.UnleashReason reason) {
+        throw new IllegalStateException("Not implemented");
     }
 
     /**
@@ -273,6 +291,6 @@ public interface EntityBridge extends CommandSourceBridge {
      */
     @SuppressWarnings("JavadocReference")
     default void arclight$onAddedToLevel() {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

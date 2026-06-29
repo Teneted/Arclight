@@ -3,10 +3,10 @@ package io.izzel.arclight.common.bridge.core.server.level;
 public interface TicketTypeBridge {
 
     default long timeout() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setLifespan(long lifespan) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

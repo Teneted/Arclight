@@ -13,15 +13,15 @@ import java.util.function.Consumer;
 public interface EntityTypeBridge<T extends Entity> {
 
     default @Nullable T spawn(ServerLevel level, @Nullable ItemStack itemStack, @Nullable LivingEntity user, BlockPos spawnPos, EntitySpawnReason spawnReason, boolean tryMoveDown, boolean movedUp, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason bukkitSpawnReason) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default @Nullable T spawn(ServerLevel level, BlockPos spawnPos, EntitySpawnReason spawnReason, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason bukkitSpawnReason) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default @Nullable T spawn(ServerLevel level, @Nullable Consumer<T> postSpawnConfig, BlockPos spawnPos, EntitySpawnReason spawnReason, boolean tryMoveDown, boolean movedUp, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason bukkitSpawnReason) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }
 

@@ -10,6 +10,6 @@ public interface CommandSourceBridge {
      * for the specified CommandSource.
      */
     default CommandSender getBukkitSender(CommandSourceStack wrapper) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

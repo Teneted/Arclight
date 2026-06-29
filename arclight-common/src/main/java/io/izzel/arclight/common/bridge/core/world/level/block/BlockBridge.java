@@ -13,18 +13,22 @@ import org.jetbrains.annotations.Nullable;
 public interface BlockBridge {
 
     default int bridge$getExpDrop(BlockState blockState, ServerLevel world, BlockPos blockPos, ItemStack itemStack, boolean dropExperience) {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default int bridge$tryDropExperience(ServerLevel worldserver, BlockPos blockposition, ItemStack itemstack, IntProvider intprovider) {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$forge$onCropsGrowPre(Level level, BlockPos pos, BlockState state, boolean def) {
-        return true;
+        throw new IllegalStateException("Not implemented");
     }
 
-    default void bridge$forge$onCropsGrowPost(Level level, BlockPos pos, BlockState state) {}
+    default void bridge$forge$onCropsGrowPost(Level level, BlockPos pos, BlockState state) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    default void bridge$forge$onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction direction, @Nullable LivingEntity igniter) {}
+    default void bridge$forge$onCaughtFire(BlockState state, Level level, BlockPos pos, @Nullable Direction direction, @Nullable LivingEntity igniter) {
+        throw new IllegalStateException("Not implemented");
+    }
 }

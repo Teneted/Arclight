@@ -5,6 +5,6 @@ import org.bukkit.craftbukkit.inventory.CraftMerchant;
 public interface MerchantBridge {
 
     default CraftMerchant getCraftMerchant() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

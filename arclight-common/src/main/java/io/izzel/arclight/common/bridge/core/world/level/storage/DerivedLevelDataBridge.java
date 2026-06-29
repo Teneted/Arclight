@@ -7,10 +7,10 @@ import net.minecraft.world.level.storage.ServerLevelData;
 public interface DerivedLevelDataBridge {
 
     default ServerLevelData bridge$getDelegate() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setDimType(ResourceKey<LevelStem> typeKey) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

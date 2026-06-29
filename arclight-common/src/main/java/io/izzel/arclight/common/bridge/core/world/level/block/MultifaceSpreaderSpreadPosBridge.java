@@ -4,10 +4,10 @@ import net.minecraft.core.BlockPos;
 
 public interface MultifaceSpreaderSpreadPosBridge {
     default BlockPos source() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$setSource(BlockPos source) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

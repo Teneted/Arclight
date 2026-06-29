@@ -5,6 +5,6 @@ import org.bukkit.craftbukkit.entity.CraftEntity;
 public interface InternalEntityBridge {
 
     default CraftEntity internal$getBukkitEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

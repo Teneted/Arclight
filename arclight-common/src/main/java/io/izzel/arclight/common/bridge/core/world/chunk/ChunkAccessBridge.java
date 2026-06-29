@@ -7,12 +7,14 @@ import org.bukkit.persistence.PersistentDataContainer;
 public interface ChunkAccessBridge {
 
     default void setBiome(int i, int j, int k, Holder<Biome> biome) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default PersistentDataContainer bridge$getPersistentDataContainer() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPersistentDataContainer(PersistentDataContainer container) {
+        throw new IllegalStateException("Not implemented");
     }
 }

@@ -29,75 +29,75 @@ import org.jetbrains.annotations.Nullable;
 public interface ServerLevelBridge extends LevelBridge {
 
     default LevelStorageSource.LevelStorageAccess bridge$getStorageSource() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default WorldGenSettings getWorldGenSettings() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default CustomBossEvents getCustomBossEvents() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default RandomSource getRandomSequence(Identifier key) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default RandomSequences getRandomSequences() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void setWeatherParameters(int clearTime, int rainTime, boolean raining, boolean thundering) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default TimerQueue<MinecraftServer> getScheduledEvents() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default LevelChunk getChunkIfLoaded(int x, int z) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean addFreshEntity(Entity entity, CreatureSpawnEvent.SpawnReason reason) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean addWithUUID(Entity entity, CreatureSpawnEvent.SpawnReason reason) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void addDuringTeleport(Entity entity, CreatureSpawnEvent.SpawnReason reason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean tryAddFreshEntityWithPassengers(Entity entity, org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason reason) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean strikeLightning(Entity entitylightning) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean strikeLightning(Entity entitylightning, LightningStrikeEvent.Cause cause) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ServerExplosion explode0(@Nullable Entity source, @Nullable DamageSource damageSource, @Nullable ExplosionDamageCalculator damageCalculator, double x, double y, double z, float r, boolean fire, Level.ExplosionInteraction interactionType, ParticleOptions smallExplosionParticles, ParticleOptions largeExplosionParticles, WeightedList<ExplosionParticleInfo> blockParticles, Holder<SoundEvent> explosionSound) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default <T extends ParticleOptions> int sendParticlesSource(ServerPlayer sender, T particle, boolean overrideLimiter, boolean alwaysShow, double x, double y, double z, int count, double xDist, double yDist, double zDist, double speed) {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default SavedDataStorage getWorldContainerDataStorage() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushStrikeLightningCause(LightningStrikeEvent.Cause cause) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
 }

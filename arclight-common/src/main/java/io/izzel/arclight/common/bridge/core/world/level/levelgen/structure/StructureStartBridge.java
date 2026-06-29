@@ -5,9 +5,11 @@ import org.bukkit.event.world.AsyncStructureGenerateEvent;
 
 public interface StructureStartBridge {
 
-    void bridge$setGenerateCause(AsyncStructureGenerateEvent.Cause cause);
+    default void bridge$setGenerateCause(AsyncStructureGenerateEvent.Cause cause) {
+        throw new IllegalStateException("Not implemented");
+    }
 
     default CraftPersistentDataContainer bridge$getPersistentDataContainer() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

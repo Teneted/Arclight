@@ -7,10 +7,10 @@ import net.minecraft.world.entity.player.Player;
 public interface TransientCraftingContainerBridge extends ContainerBridge {
 
     default void bridge$setOwner(Player owner) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setResultInventory(Container resultInventory) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

@@ -11,14 +11,14 @@ import org.bukkit.event.world.TimeSkipEvent;
 public interface ServerClockManagerBridge {
 
     default void setTotalTicks(Holder<WorldClock> clock, long totalTicks, TimeSkipEvent.SkipReason reason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean moveToTimeMarker(Holder<WorldClock> clock, ResourceKey<ClockTimeMarker> timeMarkerId, TimeSkipEvent.SkipReason reason) {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ClientboundSetTimePacket createFullSyncPacket(ServerPlayer player) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

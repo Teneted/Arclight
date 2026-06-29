@@ -7,6 +7,6 @@ import java.util.UUID;
 public interface FoxBridge extends AnimalBridge {
 
     default void bridge$addTrustedUUID(UUID uuidIn) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

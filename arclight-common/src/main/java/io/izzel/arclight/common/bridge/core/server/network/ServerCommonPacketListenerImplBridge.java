@@ -7,31 +7,31 @@ import org.bukkit.craftbukkit.entity.CraftPlayer;
 public interface ServerCommonPacketListenerImplBridge {
 
     default boolean bridge$processedDisconnect() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isDisconnected() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$disconnect(String s) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default CraftServer bridge$getCraftServer() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default CraftPlayer bridge$getCraftPlayer() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default ServerPlayer bridge$getPlayer() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setPlayer(ServerPlayer player) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
 }

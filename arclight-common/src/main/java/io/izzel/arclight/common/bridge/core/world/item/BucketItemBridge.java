@@ -7,41 +7,43 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public interface BucketItemBridge {
-    @Nullable Direction arclight$getDirection();
+    default @Nullable Direction arclight$getDirection() {
+        throw new IllegalStateException("Not implemented");
+    }
 
     default void arclight$setDirection(@Nullable Direction value) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default @Nullable BlockPos arclight$getClick() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$setClick(@Nullable BlockPos value) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default @Nullable InteractionHand arclight$getHand() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$setHand(@Nullable InteractionHand value) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default @Nullable ItemStack arclight$getStack() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$setStack(@Nullable ItemStack value) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default @Nullable org.bukkit.inventory.ItemStack arclight$getCaptureItem() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$setCaptureItem(@Nullable org.bukkit.inventory.ItemStack value) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

@@ -5,6 +5,6 @@ import io.izzel.arclight.common.bridge.core.world.entity.MobBridge;
 public interface CreeperBridge extends MobBridge {
 
     default void bridge$setPowered(boolean power) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

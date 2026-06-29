@@ -6,18 +6,18 @@ import net.minecraft.world.level.chunk.LevelChunk;
 public interface ChunkHolderBridge {
 
     default int bridge$getOldTicketLevel() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default LevelChunk getFullChunkNow() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default LevelChunk getFullChunkNowUnchecked() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void callEventIfUnloading(ChunkMap chunkmap) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

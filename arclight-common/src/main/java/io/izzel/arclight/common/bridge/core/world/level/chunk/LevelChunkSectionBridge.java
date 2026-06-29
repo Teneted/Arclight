@@ -6,6 +6,6 @@ import net.minecraft.world.level.biome.Biome;
 public interface LevelChunkSectionBridge {
 
     default void setBiome(int x, int y, int z, Holder<Biome> biome) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

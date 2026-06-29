@@ -11,24 +11,24 @@ import org.bukkit.event.entity.EntityExhaustionEvent;
 public interface PlayerBridge extends LivingEntityBridge {
 
     default boolean bridge$isFauxSleeping() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     @Override
     default CraftHumanEntity getBukkitEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Either<Player.BedSleepingProblem, Unit> bridge$trySleep(BlockPos at, boolean force) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushExhaustReason(EntityExhaustionEvent.ExhaustionReason reason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default double bridge$platform$getBlockReach() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$platform$mayfly() {

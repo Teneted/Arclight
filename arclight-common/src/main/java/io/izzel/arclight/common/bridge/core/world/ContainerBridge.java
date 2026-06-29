@@ -21,25 +21,40 @@ public interface ContainerBridge {
         return new WrappedContents((Container) this);
     }
 
-    void onOpen(CraftHumanEntity who);
+    default void onOpen(CraftHumanEntity who) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    void onClose(CraftHumanEntity who);
+    default void onClose(CraftHumanEntity who) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    List<HumanEntity> getViewers();
+    default List<HumanEntity> getViewers() {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    InventoryHolder getOwner();
+    default InventoryHolder getOwner() {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    void setOwner(InventoryHolder owner);
+    default void setOwner(InventoryHolder owner) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    void setMaxStackSize(int size);
+    default void setMaxStackSize(int size) {
+        throw new IllegalStateException("Not implemented");
+    }
 
-    Location getLocation();
+    default Location getLocation() {
+        throw new IllegalStateException("Not implemented");
+    }
 
     default RecipeHolder<?> getCurrentRecipe() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void setCurrentRecipe(RecipeHolder<?> recipe) {
+        throw new IllegalStateException("Not implemented");
     }
 
     default Inventory getOwnerInventory() {

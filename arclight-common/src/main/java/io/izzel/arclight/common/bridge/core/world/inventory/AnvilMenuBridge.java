@@ -9,18 +9,18 @@ import org.jetbrains.annotations.NotNull;
 public interface AnvilMenuBridge {
 
     default boolean bridge$forge$onAnvilChange(AnvilMenu container, @NotNull ItemStack left, @NotNull ItemStack right, Container outputSlot, String name, int baseCost, Player player) {
-        return true;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$forge$isBookEnchantable(ItemStack a, ItemStack b) {
-        return true;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$allowZeroCost() {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean arclight$isZeroCostAllowed() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 }

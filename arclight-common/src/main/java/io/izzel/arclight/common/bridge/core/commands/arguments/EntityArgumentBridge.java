@@ -7,6 +7,6 @@ import net.minecraft.commands.arguments.selector.EntitySelector;
 public interface EntityArgumentBridge {
 
     default EntitySelector parse(StringReader reader, boolean allowSelectors, boolean overridePermissions) throws CommandSyntaxException {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

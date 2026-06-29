@@ -5,6 +5,6 @@ import org.bukkit.craftbukkit.inventory.CraftMerchantRecipe;
 public interface MerchantOfferBridge {
 
     default CraftMerchantRecipe asBukkit() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

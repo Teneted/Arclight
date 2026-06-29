@@ -8,26 +8,26 @@ import org.bukkit.command.CommandSender;
 public interface CommandSourceStackBridge {
 
     default PermissionSet bridge$getBukkitPermissions() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setBukkitPermissions(PermissionSet bukkitPermissions) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default CommandNode<?> bridge$getCurrentCommand() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setCurrentCommand(CommandNode<?> node) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setSource(CommandSource source) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default CommandSender getBukkitSender() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

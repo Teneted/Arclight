@@ -9,6 +9,6 @@ import java.util.function.Predicate;
 public interface ServerEntity_SynchronizerBridge {
 
     default void sendToTrackingPlayersFilteredAndSelf(Packet<? super ClientGamePacketListener> packet, Predicate<ServerPlayer> predicate){
-
+        throw new IllegalStateException("Not implemented");
     }
 }

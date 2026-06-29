@@ -11,20 +11,22 @@ public interface ServerLoginPacketListenerImplBridge {
     }
 
     default int bridge$getVelocityLoginId() {
-        return 0;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$preLogin(GameProfile authenticatedProfile) throws Exception {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$disconnect(String reason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default FriendlyByteBuf arclight$platform$customQAData(ServerboundCustomQueryAnswerPacket packet) {
         return ArclightCustomQueryAnswerPayload.tryUnwrap(packet.payload());
     }
 
-    default void arclight$platform$onCustomQA(ServerboundCustomQueryAnswerPacket payload) {}
+    default void arclight$platform$onCustomQA(ServerboundCustomQueryAnswerPacket payload) {
+        throw new IllegalStateException("Not implemented");
+    }
 }

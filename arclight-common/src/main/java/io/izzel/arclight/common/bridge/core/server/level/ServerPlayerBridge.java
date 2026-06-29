@@ -16,98 +16,98 @@ import java.util.Optional;
 public interface ServerPlayerBridge extends PlayerBridge {
 
     default <L, R> Either<L, R> bridge$fireBedEvent(Either<L, R> e, BlockPos pos) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     @Override
     default CraftPlayer getBukkitEntity() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushChangeDimensionCause(PlayerTeleportEvent.TeleportCause cause) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushChangeSpawnCause(PlayerSpawnChangeEvent.Cause cause) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default Optional<PlayerTeleportEvent.TeleportCause> bridge$getTeleportCause() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$pushRespawnReason(PlayerRespawnEvent.RespawnReason respawnReason) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setTransferCookieConnection(CraftPlayer.TransferCookieConnection transferCookieConnection) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default CraftPlayer.TransferCookieConnection bridge$getTransferCookieConnection() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void resendItemInHands() {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default BlockPos bridge$getSpawnPoint(ServerLevel world) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isMovementBlocked() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setCompassTarget(Location location) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isJoining() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$reset() {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$initialized() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean bridge$isTrackerDirty() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setTrackerDirty(boolean flag) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     default boolean arclight$isKeepLevel() {
-        return false;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void arclight$readDeathEvent(PlayerDeathEvent event) {
-
+        throw new IllegalStateException("Not implemented");
     }
 
     interface RespawnPosAngleBridge {
 
         default boolean bridge$isBedSpawn() {
-            return false;
+            throw new IllegalStateException("Not implemented");
         }
 
         default boolean bridge$isAnchorSpawn() {
-            return false;
+            throw new IllegalStateException("Not implemented");
         }
 
         default void bridge$setBedSpawn(boolean b) {
-
+            throw new IllegalStateException("Not implemented");
         }
 
         default void bridge$setAnchorSpawn(boolean b) {
-
+            throw new IllegalStateException("Not implemented");
         }
     }
 }

@@ -5,10 +5,10 @@ import net.minecraft.ChatFormatting;
 public interface TextColorBridge {
 
     default ChatFormatting bridge$getFormat(){
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default void bridge$setFormat(ChatFormatting format) {
-
+        throw new IllegalStateException("Not implemented");
     }
 }

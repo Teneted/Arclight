@@ -7,10 +7,10 @@ import java.util.Set;
 public interface PiglinBridge {
 
     default Set<Item> bridge$getAllowedBarterItems() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 
     default Set<Item> bridge$getInterestItems() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

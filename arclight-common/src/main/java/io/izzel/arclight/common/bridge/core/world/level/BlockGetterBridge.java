@@ -7,6 +7,6 @@ import net.minecraft.world.phys.BlockHitResult;
 public interface BlockGetterBridge {
 
     default BlockHitResult clip(ClipContext context, BlockPos pos) {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

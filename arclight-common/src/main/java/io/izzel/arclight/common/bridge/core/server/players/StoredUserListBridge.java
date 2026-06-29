@@ -5,6 +5,6 @@ import java.util.Collection;
 public interface StoredUserListBridge<V> {
 
     default Collection<V> getValues() {
-        return null;
+        throw new IllegalStateException("Not implemented");
     }
 }

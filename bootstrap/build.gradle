@@ -86,7 +86,7 @@ dependencies {
 
     embedCommon 'commons-lang:commons-lang:2.6@jar'
     embedCommon(project(':i18n-config')) { transitive = false }
-    embedFabric(libs.mixin.tools) { transitive = false }
+    //embedFabric(libs.mixin.tools) { transitive = false }
     embedFabric(project(':installer')) { transitive = false }
 }
 

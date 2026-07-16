@@ -1,3 +1,0 @@
-accessWidener   v2  official
-accessible method net/neoforged/neoforge/registries/BaseMappedRegistry unfreeze ()V
-accessible method net/neoforged/neoforge/attachment/AttachmentHolder deserializeAttachments (Lnet/minecraft/nbt/CompoundTag;)V

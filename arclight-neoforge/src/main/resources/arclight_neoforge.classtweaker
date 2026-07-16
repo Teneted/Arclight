@@ -1,4 +1,6 @@
 classTweaker  v2  official
+transitive-accessible method net/neoforged/neoforge/registries/BaseMappedRegistry unfreeze ()V
+transitive-accessible method net/neoforged/neoforge/attachment/AttachmentHolder deserializeAttachments (Lnet/minecraft/nbt/CompoundTag;)V
 transitive-accessible class net/minecraft/server/MinecraftServer$ReloadableResources
 transitive-accessible class net/minecraft/server/dedicated/DedicatedServerProperties$WorldDimensionData
 transitive-accessible class net/minecraft/server/level/ChunkMap$TrackedEntity
@@ -15,7 +17,6 @@ transitive-accessible method net/minecraft/world/level/block/DispenserBlock disp
 transitive-accessible method net/minecraft/world/level/block/DropperBlock dispenseFrom (Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)V
 transitive-accessible method net/minecraft/world/entity/decoration/HangingEntity setDirection (Lnet/minecraft/core/Direction;)V
 transitive-accessible method net/minecraft/world/entity/decoration/ItemFrame setDirection (Lnet/minecraft/core/Direction;)V
-transitive-accessible method net/minecraft/server/level/ServerLevel getEntities() Lnet/minecraft/world/level/entity/LevelEntityGetter;
 transitive-accessible method net/minecraft/world/level/Level getEntities (Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;
 transitive-accessible method net/minecraft/world/entity/projectile/hurtingprojectile/windcharge/AbstractWindCharge explode (Lnet/minecraft/world/phys/Vec3;)V
 transitive-accessible method net/minecraft/world/entity/projectile/hurtingprojectile/windcharge/BreezeWindCharge explode (Lnet/minecraft/world/phys/Vec3;)V
